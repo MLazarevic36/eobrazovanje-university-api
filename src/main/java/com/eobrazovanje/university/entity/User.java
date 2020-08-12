@@ -22,6 +22,9 @@ public class User implements Serializable {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
+    private Boolean deleted;
+
     public User() {
     }
 
@@ -61,5 +64,13 @@ public class User implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

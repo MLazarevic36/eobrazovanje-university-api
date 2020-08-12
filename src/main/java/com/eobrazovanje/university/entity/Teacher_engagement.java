@@ -24,6 +24,9 @@ public class Teacher_engagement implements Serializable {
     @Column(name = "teacher_role", nullable = false)
     private Teacher_role teacher_role;
 
+    @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
+    private Boolean deleted;
+
     public Teacher_engagement() {
     }
 
@@ -59,5 +62,11 @@ public class Teacher_engagement implements Serializable {
         this.teacher_role = teacher_role;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
 
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 }

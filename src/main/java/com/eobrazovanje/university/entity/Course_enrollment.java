@@ -20,6 +20,9 @@ public class Course_enrollment implements Serializable {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
+    private Boolean deleted;
+
     public Course_enrollment() {
     }
 
@@ -45,5 +48,13 @@ public class Course_enrollment implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

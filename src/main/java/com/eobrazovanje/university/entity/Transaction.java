@@ -26,6 +26,9 @@ public class Transaction implements Serializable {
     @Column(name = "date", nullable = false)
     private Date date;
 
+    @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
+    private Boolean deleted;
+
     public Transaction() {
     }
 
@@ -67,5 +70,13 @@ public class Transaction implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

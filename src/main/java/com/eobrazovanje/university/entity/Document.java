@@ -22,6 +22,9 @@ public class Document implements Serializable {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
+    @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
+    private Boolean deleted;
+
     public Document() {
     }
 
@@ -55,5 +58,13 @@ public class Document implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

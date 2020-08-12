@@ -22,6 +22,9 @@ public class Colloquium implements Serializable {
     @JoinColumn(name = "exam_id", nullable = false)
     private Exam exam;
 
+    @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
+    private Boolean deleted;
+
     public Colloquium() {
     }
 
@@ -47,5 +50,21 @@ public class Colloquium implements Serializable {
 
     public void setExam(Exam exam) {
         this.exam = exam;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

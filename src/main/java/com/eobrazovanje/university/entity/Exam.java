@@ -32,6 +32,9 @@ public class Exam implements Serializable {
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private Set<Colloquium> colloquiums = new HashSet<>();
 
+    @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
+    private Boolean deleted;
+
     public Exam() {
     }
 
@@ -81,5 +84,13 @@ public class Exam implements Serializable {
 
     public void setColloquiums(Set<Colloquium> colloquiums) {
         this.colloquiums = colloquiums;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

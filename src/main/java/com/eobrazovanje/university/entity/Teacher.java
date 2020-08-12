@@ -27,6 +27,9 @@ public class Teacher implements Serializable {
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private Set<Teacher_engagement> engagements = new HashSet<>();
 
+    @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
+    private Boolean deleted;
+
 
     public Teacher() {
     }
@@ -69,5 +72,13 @@ public class Teacher implements Serializable {
 
     public void setEngagements(Set<Teacher_engagement> engagements) {
         this.engagements = engagements;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }
