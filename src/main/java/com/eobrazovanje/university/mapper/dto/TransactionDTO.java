@@ -1,35 +1,27 @@
-package com.eobrazovanje.university.entity;
+package com.eobrazovanje.university.mapper.dto;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "transactions")
-public class Transaction implements Serializable {
+public class TransactionDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transaction_id", unique = true, nullable = false)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
-
-    @Column(name = "purpose", nullable = false)
+    private StudentDTO studentDTO;
     private String purpose;
-
-    @Column(name = "amount", nullable = false)
     private Double amount;
-
-    @Column(name = "date", nullable = false)
     private Date date;
-
-    @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
     private Boolean deleted;
 
-    public Transaction() {
+    public TransactionDTO() {
+    }
+
+    public TransactionDTO(Long id, StudentDTO studentDTO, String purpose, Double amount, Date date, Boolean deleted) {
+        this.id = id;
+        this.studentDTO = studentDTO;
+        this.purpose = purpose;
+        this.amount = amount;
+        this.date = date;
+        this.deleted = deleted;
     }
 
     public Long getId() {
@@ -40,12 +32,12 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public StudentDTO getStudentDTO() {
+        return studentDTO;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentDTO(StudentDTO studentDTO) {
+        this.studentDTO = studentDTO;
     }
 
     public String getPurpose() {
