@@ -1,8 +1,13 @@
 package com.eobrazovanje.university.controller;
 
+import com.eobrazovanje.university.config.AppConstants;
 import com.eobrazovanje.university.entity.Student;
+import com.eobrazovanje.university.entity.User;
 import com.eobrazovanje.university.mapper.StudentMapper;
+import com.eobrazovanje.university.mapper.UserMapper;
+import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.mapper.dto.StudentDTO;
+import com.eobrazovanje.university.repository.UserRepository;
 import com.eobrazovanje.university.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,16 +28,16 @@ public class StudentController {
     @Autowired
     private StudentMapper studentMapper;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserMapper userMapper;
+
     @GetMapping
-    public ResponseEntity<Set<StudentDTO>> getStudents(Pageable pageable) {
-        try {
-            Page<Student> students = studentService.findAll(pageable);
-            return new ResponseEntity<>(studentMapper.convertToDtos(students),
-                    HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public PagedResponse<StudentDTO> getStudents (@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                  @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+        return studentService.getAllStudents(page,size);
     }
 
     @GetMapping(value = "/{id}")
@@ -48,6 +53,8 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<StudentDTO> addStudent(@RequestBody StudentDTO studentDTO) {
+        User user = userRepository.getOne(studentDTO.getUser().getId());
+        studentDTO.setUser(userMapper.convertToDto(user));
         Student student = studentMapper.convertToEntity(studentDTO);
         try {
             student = studentService.save(student);

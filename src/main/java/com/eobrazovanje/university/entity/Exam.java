@@ -2,6 +2,7 @@ package com.eobrazovanje.university.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,22 +16,27 @@ public class Exam implements Serializable {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "course_enrollment_id", nullable = false)
-    private Course_enrollment course_enrollment;
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 
-    @Column(name = "grade", nullable = false)
-    private int grade;
+    @Column(name = "date", nullable = false)
+    private Timestamp date;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private Status status;
+    @Column(name = "colloquium_points")
+    private int colloquium_points;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    @Column(name = "exam_points")
+    private int exam_points;
+
+    @Column(name = "location", nullable = false)
+    private String location;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "term", referencedColumnName = "term_id", nullable = false)
+    private Term term;
 
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    private Set<Colloquium> colloquiums = new HashSet<>();
+    private Set<ExamRegistration> examRegistrations = new HashSet<>();
 
     @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
     private Boolean deleted;
@@ -46,44 +52,12 @@ public class Exam implements Serializable {
         this.id = id;
     }
 
-    public Course_enrollment getCourse_enrollment() {
-        return course_enrollment;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourse_enrollment(Course_enrollment course_enrollment) {
-        this.course_enrollment = course_enrollment;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Set<Colloquium> getColloquiums() {
-        return colloquiums;
-    }
-
-    public void setColloquiums(Set<Colloquium> colloquiums) {
-        this.colloquiums = colloquiums;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public Boolean getDeleted() {
@@ -92,5 +66,53 @@ public class Exam implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    public int getColloquium_points() {
+        return colloquium_points;
+    }
+
+    public void setColloquium_points(int colloquium_points) {
+        this.colloquium_points = colloquium_points;
+    }
+
+    public int getExam_points() {
+        return exam_points;
+    }
+
+    public void setExam_points(int exam_points) {
+        this.exam_points = exam_points;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Term getTerm() {
+        return term;
+    }
+
+    public void setTerm(Term term) {
+        this.term = term;
+    }
+
+    public Set<ExamRegistration> getExamRegistrations() {
+        return examRegistrations;
+    }
+
+    public void setExamRegistrations(Set<ExamRegistration> examRegistrations) {
+        this.examRegistrations = examRegistrations;
     }
 }

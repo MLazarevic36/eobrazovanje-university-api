@@ -1,8 +1,6 @@
 package com.eobrazovanje.university.mapper;
 
-import com.eobrazovanje.university.entity.Colloquium;
 import com.eobrazovanje.university.entity.Course_enrollment;
-import com.eobrazovanje.university.mapper.dto.ColloquiumDTO;
 import com.eobrazovanje.university.mapper.dto.CourseEnrollmentDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

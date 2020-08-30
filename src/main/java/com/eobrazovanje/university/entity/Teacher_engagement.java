@@ -12,7 +12,7 @@ public class Teacher_engagement implements Serializable {
     @Column(name = "teacher_engagement_id", unique = true, nullable = false)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 

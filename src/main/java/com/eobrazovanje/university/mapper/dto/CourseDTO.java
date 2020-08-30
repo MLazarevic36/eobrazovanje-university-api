@@ -1,5 +1,8 @@
 package com.eobrazovanje.university.mapper.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,16 +11,18 @@ public class CourseDTO implements Serializable {
 
     private Long id;
     private String name;
-    private Set<TeacherEngagementDTO> engagementDTOS = new HashSet<>();
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<TeacherEngagementDTO> engagements = new HashSet<TeacherEngagementDTO>();
     private Boolean deleted;
 
     public CourseDTO() {
     }
 
-    public CourseDTO(Long id, String name, Set<TeacherEngagementDTO> engagementDTOS, Boolean deleted) {
+    public CourseDTO(Long id, String name, Set<TeacherEngagementDTO> engagements, Boolean deleted) {
         this.id = id;
         this.name = name;
-        this.engagementDTOS = engagementDTOS;
+        this.engagements = engagements;
         this.deleted = deleted;
     }
 
@@ -37,12 +42,12 @@ public class CourseDTO implements Serializable {
         this.name = name;
     }
 
-    public Set<TeacherEngagementDTO> getEngagementDTOS() {
-        return engagementDTOS;
+    public Set<TeacherEngagementDTO> getEngagements() {
+        return engagements;
     }
 
-    public void setEngagementDTOS(Set<TeacherEngagementDTO> engagementDTOS) {
-        this.engagementDTOS = engagementDTOS;
+    public void setEngagements(Set<TeacherEngagementDTO> engagements) {
+        this.engagements = engagements;
     }
 
     public Boolean getDeleted() {

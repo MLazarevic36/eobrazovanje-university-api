@@ -1,5 +1,9 @@
 package com.eobrazovanje.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -17,7 +21,7 @@ public class Course_enrollment implements Serializable {
     private Course course;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
     @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")

@@ -1,8 +1,10 @@
 package com.eobrazovanje.university.controller;
 
+import com.eobrazovanje.university.config.AppConstants;
 import com.eobrazovanje.university.entity.Course;
 import com.eobrazovanje.university.mapper.CourseMapper;
 import com.eobrazovanje.university.mapper.dto.CourseDTO;
+import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,15 +26,9 @@ public class CourseController {
     private CourseMapper courseMapper;
 
     @GetMapping
-    public ResponseEntity<Set<CourseDTO>> getCourses(Pageable pageable) {
-        try {
-            Page<Course> courses = courseService.findAll(pageable);
-            return new ResponseEntity<>(courseMapper.convertToDtos(courses),
-                    HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public PagedResponse<CourseDTO> getCourses (@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+        return courseService.getAllCourses(page,size);
     }
 
     @GetMapping(value = "/{id}")

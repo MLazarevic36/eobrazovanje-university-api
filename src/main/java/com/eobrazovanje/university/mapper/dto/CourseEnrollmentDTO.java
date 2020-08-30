@@ -1,21 +1,30 @@
 package com.eobrazovanje.university.mapper.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.io.Serializable;
 
 public class CourseEnrollmentDTO implements Serializable {
 
     private Long id;
-    private CourseDTO courseDTO;
-    private StudentDTO studentDTO;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private CourseDTO course;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private StudentDTO student;
     private Boolean deleted;
 
     public CourseEnrollmentDTO() {
     }
 
-    public CourseEnrollmentDTO(Long id, CourseDTO courseDTO, StudentDTO studentDTO, Boolean deleted) {
+    public CourseEnrollmentDTO(Long id, CourseDTO course, StudentDTO student, Boolean deleted) {
         this.id = id;
-        this.courseDTO = courseDTO;
-        this.studentDTO = studentDTO;
+        this.course = course;
+        this.student = student;
         this.deleted = deleted;
     }
 
@@ -27,27 +36,27 @@ public class CourseEnrollmentDTO implements Serializable {
         this.id = id;
     }
 
-    public CourseDTO getCourseDTO() {
-        return courseDTO;
-    }
-
-    public void setCourseDTO(CourseDTO courseDTO) {
-        this.courseDTO = courseDTO;
-    }
-
-    public StudentDTO getStudentDTO() {
-        return studentDTO;
-    }
-
-    public void setStudentDTO(StudentDTO studentDTO) {
-        this.studentDTO = studentDTO;
-    }
-
     public Boolean getDeleted() {
         return deleted;
     }
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public CourseDTO getCourse() {
+        return course;
+    }
+
+    public void setCourse(CourseDTO course) {
+        this.course = course;
+    }
+
+    public StudentDTO getStudent() {
+        return student;
+    }
+
+    public void setStudent(StudentDTO student) {
+        this.student = student;
     }
 }

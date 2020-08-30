@@ -1,14 +1,22 @@
 package com.eobrazovanje.university.controller;
 
+import com.eobrazovanje.university.config.AppConstants;
+import com.eobrazovanje.university.entity.Role;
 import com.eobrazovanje.university.entity.User;
 import com.eobrazovanje.university.mapper.UserMapper;
+import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.mapper.dto.UserDTO;
+import com.eobrazovanje.university.security.CurrentUser;
+import com.eobrazovanje.university.security.UserPrincipal;
 import com.eobrazovanje.university.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -24,15 +32,10 @@ public class UserController {
     private UserMapper userMapper;
 
     @GetMapping
-    public ResponseEntity<Set<UserDTO>> getUsers(Pageable pageable) {
-        try {
-            Page<User> users = userService.findAll(pageable);
-            return new ResponseEntity<>(userMapper.convertToDtos(users),
-                    HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public PagedResponse<UserDTO> getUsers(@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                           @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+
+        return userService.getAllUsers(page, size);
     }
 
     @GetMapping(value = "/{id}")
@@ -82,6 +85,16 @@ public class UserController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/me")
+    public UserDTO getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        currentUser = (UserPrincipal) auth.getPrincipal();
+
+        UserDTO userDTO = new UserDTO(currentUser.getId(), currentUser.getUsername(),
+                currentUser.getPassword(), Role.valueOf(currentUser.getAuthority().toString()), currentUser.getDeleted());
+        return userDTO;
     }
 
 }

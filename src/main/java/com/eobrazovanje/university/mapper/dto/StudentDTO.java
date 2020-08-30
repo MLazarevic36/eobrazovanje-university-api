@@ -1,5 +1,7 @@
 package com.eobrazovanje.university.mapper.dto;
 
+import com.fasterxml.jackson.annotation.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,29 +13,37 @@ public class StudentDTO implements Serializable {
     private String last_name;
     private String index_number;
     private Double account_balance;
-    private UserDTO userDTO;
-    private Set<CourseEnrollmentDTO> enrollmentDTOS = new HashSet<>();
-    private Set<DocumentDTO> documentDTOS = new HashSet<>();
-    private Set<TransactionDTO> transactionDTOS = new HashSet<>();
-    private Set<ExamDTO> examDTOS = new HashSet<>();
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private UserDTO user;
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<CourseEnrollmentDTO> enrollments = new HashSet<CourseEnrollmentDTO>();
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<DocumentDTO> documents = new HashSet<DocumentDTO>();
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<TransactionDTO> transactions = new HashSet<TransactionDTO>();
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<ExamDTO> exams = new HashSet<ExamDTO>();
     private Boolean deleted;
 
     public StudentDTO() {
     }
 
-    public StudentDTO(Long id, String first_name, String last_name, String index_number, Double account_balance,
-                      UserDTO userDTO, Set<CourseEnrollmentDTO> enrollmentDTOS, Set<DocumentDTO> documentDTOS,
-                      Set<TransactionDTO> transactionDTOS, Set<ExamDTO> examDTOS, Boolean deleted) {
+    public StudentDTO(Long id, String first_name, String last_name, String index_number, Double account_balance, UserDTO user, Set<CourseEnrollmentDTO> enrollments, Set<DocumentDTO> documents, Set<TransactionDTO> transactions, Set<ExamDTO> exams, Boolean deleted) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.index_number = index_number;
         this.account_balance = account_balance;
-        this.userDTO = userDTO;
-        this.enrollmentDTOS = enrollmentDTOS;
-        this.documentDTOS = documentDTOS;
-        this.transactionDTOS = transactionDTOS;
-        this.examDTOS = examDTOS;
+        this.user = user;
+        this.enrollments = enrollments;
+        this.documents = documents;
+        this.transactions = transactions;
+        this.exams = exams;
         this.deleted = deleted;
     }
 
@@ -77,44 +87,44 @@ public class StudentDTO implements Serializable {
         this.account_balance = account_balance;
     }
 
-    public UserDTO getUserDTO() {
-        return userDTO;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setUserDTO(UserDTO userDTO) {
-        this.userDTO = userDTO;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
-    public Set<CourseEnrollmentDTO> getEnrollmentDTOS() {
-        return enrollmentDTOS;
+    public Set<CourseEnrollmentDTO> getEnrollments() {
+        return enrollments;
     }
 
-    public void setEnrollmentDTOS(Set<CourseEnrollmentDTO> enrollmentDTOS) {
-        this.enrollmentDTOS = enrollmentDTOS;
+    public void setEnrollments(Set<CourseEnrollmentDTO> enrollments) {
+        this.enrollments = enrollments;
     }
 
-    public Set<DocumentDTO> getDocumentDTOS() {
-        return documentDTOS;
+    public Set<DocumentDTO> getDocuments() {
+        return documents;
     }
 
-    public void setDocumentDTOS(Set<DocumentDTO> documentDTOS) {
-        this.documentDTOS = documentDTOS;
+    public void setDocuments(Set<DocumentDTO> documents) {
+        this.documents = documents;
     }
 
-    public Set<TransactionDTO> getTransactionDTOS() {
-        return transactionDTOS;
+    public Set<TransactionDTO> getTransactions() {
+        return transactions;
     }
 
-    public void setTransactionDTOS(Set<TransactionDTO> transactionDTOS) {
-        this.transactionDTOS = transactionDTOS;
+    public void setTransactions(Set<TransactionDTO> transactions) {
+        this.transactions = transactions;
     }
 
-    public Set<ExamDTO> getExamDTOS() {
-        return examDTOS;
+    public Set<ExamDTO> getExams() {
+        return exams;
     }
 
-    public void setExamDTOS(Set<ExamDTO> examDTOS) {
-        this.examDTOS = examDTOS;
+    public void setExams(Set<ExamDTO> exams) {
+        this.exams = exams;
     }
 
     public Boolean getDeleted() {

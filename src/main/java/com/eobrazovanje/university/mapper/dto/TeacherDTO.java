@@ -1,5 +1,7 @@
 package com.eobrazovanje.university.mapper.dto;
 
+import com.fasterxml.jackson.annotation.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,19 +11,23 @@ public class TeacherDTO implements Serializable {
     private Long id;
     private String first_name;
     private String last_name;
-    private UserDTO userDTO;
-    private Set<TeacherEngagementDTO> engagementDTOS = new HashSet<>();
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private UserDTO user;
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<TeacherEngagementDTO> engagements = new HashSet<TeacherEngagementDTO>();
     private Boolean deleted;
 
     public TeacherDTO() {
     }
 
-    public TeacherDTO(Long id, String first_name, String last_name, UserDTO userDTO, Set<TeacherEngagementDTO> engagementDTOS, Boolean deleted) {
+    public TeacherDTO(Long id, String first_name, String last_name, UserDTO user, Set<TeacherEngagementDTO> engagements, Boolean deleted) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
-        this.userDTO = userDTO;
-        this.engagementDTOS = engagementDTOS;
+        this.user = user;
+        this.engagements = engagements;
         this.deleted = deleted;
     }
 
@@ -49,20 +55,20 @@ public class TeacherDTO implements Serializable {
         this.last_name = last_name;
     }
 
-    public UserDTO getUserDTO() {
-        return userDTO;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setUserDTO(UserDTO userDTO) {
-        this.userDTO = userDTO;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
-    public Set<TeacherEngagementDTO> getEngagementDTOS() {
-        return engagementDTOS;
+    public Set<TeacherEngagementDTO> getEngagements() {
+        return engagements;
     }
 
-    public void setEngagementDTOS(Set<TeacherEngagementDTO> engagementDTOS) {
-        this.engagementDTOS = engagementDTOS;
+    public void setEngagements(Set<TeacherEngagementDTO> engagements) {
+        this.engagements = engagements;
     }
 
     public Boolean getDeleted() {

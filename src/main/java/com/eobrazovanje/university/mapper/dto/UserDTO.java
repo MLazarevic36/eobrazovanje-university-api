@@ -11,6 +11,7 @@ public class UserDTO implements Serializable {
     private String password;
     private Role role;
     private Boolean deleted;
+    private String token;
 
     public UserDTO() {
     }
@@ -61,5 +62,13 @@ public class UserDTO implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

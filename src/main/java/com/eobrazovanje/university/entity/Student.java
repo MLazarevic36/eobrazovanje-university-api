@@ -23,7 +23,7 @@ public class Student implements Serializable {
     @Column(name = "index_number", nullable = false)
     private String index_number;
 
-    @Column(name = "account_balance", nullable = false)
+    @Column(name = "account_balance")
     private Double account_balance;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)

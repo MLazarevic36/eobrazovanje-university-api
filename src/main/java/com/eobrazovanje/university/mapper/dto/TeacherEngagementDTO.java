@@ -1,24 +1,32 @@
 package com.eobrazovanje.university.mapper.dto;
 
 import com.eobrazovanje.university.entity.Teacher_role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.io.Serializable;
 
 public class TeacherEngagementDTO implements Serializable {
 
     private Long id;
-    private CourseDTO courseDTO;
-    private TeacherDTO teacherDTO;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private CourseDTO course;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private TeacherDTO teacher;
     private Teacher_role teacher_role;
     private Boolean deleted;
 
     public TeacherEngagementDTO() {
     }
 
-    public TeacherEngagementDTO(Long id, CourseDTO courseDTO, TeacherDTO teacherDTO, Teacher_role teacher_role, Boolean deleted) {
+    public TeacherEngagementDTO(Long id, CourseDTO course, TeacherDTO teacher, Teacher_role teacher_role, Boolean deleted) {
         this.id = id;
-        this.courseDTO = courseDTO;
-        this.teacherDTO = teacherDTO;
+        this.course = course;
+        this.teacher = teacher;
         this.teacher_role = teacher_role;
         this.deleted = deleted;
     }
@@ -31,20 +39,20 @@ public class TeacherEngagementDTO implements Serializable {
         this.id = id;
     }
 
-    public CourseDTO getCourseDTO() {
-        return courseDTO;
+    public CourseDTO getCourse() {
+        return course;
     }
 
-    public void setCourseDTO(CourseDTO courseDTO) {
-        this.courseDTO = courseDTO;
+    public void setCourse(CourseDTO course) {
+        this.course = course;
     }
 
-    public TeacherDTO getTeacherDTO() {
-        return teacherDTO;
+    public TeacherDTO getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherDTO(TeacherDTO teacherDTO) {
-        this.teacherDTO = teacherDTO;
+    public void setTeacher(TeacherDTO teacher) {
+        this.teacher = teacher;
     }
 
     public Teacher_role getTeacher_role() {

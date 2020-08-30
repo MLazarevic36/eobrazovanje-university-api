@@ -17,7 +17,7 @@ public class Course implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Teacher_engagement> teacher_engagements = new HashSet<>();
 
     @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
