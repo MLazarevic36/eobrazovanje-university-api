@@ -1,7 +1,7 @@
 package com.eobrazovanje.university.mapper.dto;
 
-import com.eobrazovanje.university.entity.ExamRegistration;
 import com.eobrazovanje.university.entity.TermName;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,44 +10,43 @@ import java.util.Set;
 
 public class TermDTO implements Serializable {
 
-    private Long id;
-    private TermName termName;
+    private Long term_id;
+    private TermName term_name;
     private Date start_date;
     private Date end_date;
-    private double price;
+
+    @JsonManagedReference(value="term-exams")
     private Set<ExamDTO> exams = new HashSet<ExamDTO>();
-    private Set<ExamRegistrationDTO> examRegistrations = new HashSet<ExamRegistrationDTO>();
+
     private Boolean deleted;
 
     public TermDTO() {
     }
 
-    public TermDTO(Long id, TermName termName, Date start_date, Date end_date, double price, Set<ExamDTO> exams,
-                   Set<ExamRegistrationDTO> examRegistrations, Boolean deleted) {
-        this.id = id;
-        this.termName = termName;
+    public TermDTO(Long term_id, TermName term_name, Date start_date, Date end_date, Set<ExamDTO> exams,
+                   Boolean deleted) {
+        this.term_id = term_id;
+        this.term_name = term_name;
         this.start_date = start_date;
         this.end_date = end_date;
-        this.price = price;
         this.exams = exams;
-        this.examRegistrations = examRegistrations;
         this.deleted = deleted;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTerm_id() {
+        return term_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTerm_id(Long term_id) {
+        this.term_id = term_id;
     }
 
-    public TermName getTermName() {
-        return termName;
+    public TermName getTerm_name() {
+        return term_name;
     }
 
-    public void setTermName(TermName termName) {
-        this.termName = termName;
+    public void setTerm_name(TermName term_name) {
+        this.term_name = term_name;
     }
 
     public Date getStart_date() {
@@ -66,28 +65,12 @@ public class TermDTO implements Serializable {
         this.end_date = end_date;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public Set<ExamDTO> getExams() {
         return exams;
     }
 
     public void setExams(Set<ExamDTO> exams) {
         this.exams = exams;
-    }
-
-    public Set<ExamRegistrationDTO> getExamRegistrations() {
-        return examRegistrations;
-    }
-
-    public void setExamRegistrations(Set<ExamRegistrationDTO> examRegistrations) {
-        this.examRegistrations = examRegistrations;
     }
 
     public Boolean getDeleted() {

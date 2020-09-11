@@ -63,7 +63,7 @@ public class CourseEnrollmentController {
     public ResponseEntity<CourseEnrollmentDTO> updateCourseEnrollment(@RequestBody CourseEnrollmentDTO courseEnrollmentDTO) {
         Course_enrollment course_enrollment = courseEnrollmentMapper.convertToEntity(courseEnrollmentDTO);
         try {
-            course_enrollment.setId(courseEnrollmentDTO.getId());
+            course_enrollment.setCourse_enrollment_id(courseEnrollmentDTO.getCourse_enrollment_id());
             course_enrollment = courseEnrollmentService.save(course_enrollment);
             return new ResponseEntity<>(courseEnrollmentMapper.convertToDto(course_enrollment), HttpStatus.OK);
         } catch (Exception e) {

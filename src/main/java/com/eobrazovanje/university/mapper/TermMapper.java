@@ -27,6 +27,10 @@ public class TermMapper {
         return termPage.stream().map(this::convertToDto).collect(Collectors.toSet());
     }
 
+    public Set<TermDTO> convertToDtosSet(Set<Term> terms) {
+        return terms.stream().map(this::convertToDto).collect(Collectors.toSet());
+    }
+
     public Term convertToEntity(TermDTO termDTO) {
         return modelMapper.map(termDTO, Term.class);
     }

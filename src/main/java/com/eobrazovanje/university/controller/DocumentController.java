@@ -63,7 +63,7 @@ public class DocumentController {
     public ResponseEntity<DocumentDTO> updateDocument(@RequestBody DocumentDTO documentDTO) {
         Document document = documentMapper.convertToEntity(documentDTO);
         try {
-            document.setId(documentDTO.getId());
+            document.setDocument_id(documentDTO.getDocument_id());
             document = documentService.save(document);
             return new ResponseEntity<>(documentMapper.convertToDto(document), HttpStatus.OK);
         } catch (Exception e) {

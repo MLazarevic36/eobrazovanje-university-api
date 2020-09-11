@@ -12,7 +12,7 @@ public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id", unique = true, nullable = false)
-    private Long id;
+    private Long course_id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -26,12 +26,12 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getCourse_id() {
+        return course_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCourse_id(Long course_id) {
+        this.course_id = course_id;
     }
 
     public String getName() {

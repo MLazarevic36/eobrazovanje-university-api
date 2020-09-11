@@ -1,8 +1,11 @@
 package com.eobrazovanje.university.controller;
 
+import com.eobrazovanje.university.config.AppConstants;
 import com.eobrazovanje.university.entity.Exam;
 import com.eobrazovanje.university.mapper.ExamMapper;
 import com.eobrazovanje.university.mapper.dto.ExamDTO;
+import com.eobrazovanje.university.mapper.dto.PagedResponse;
+import com.eobrazovanje.university.mapper.dto.UserDTO;
 import com.eobrazovanje.university.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,15 +27,10 @@ public class ExamController {
     private ExamMapper examMapper;
 
     @GetMapping
-    public ResponseEntity<Set<ExamDTO>> getExams(Pageable pageable) {
-        try {
-            Page<Exam> exams = examService.findAll(pageable);
-            return new ResponseEntity<>(examMapper.convertToDtos(exams),
-                    HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public PagedResponse<ExamDTO> getExams(@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                           @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+
+        return examService.getAllExams(page, size);
     }
 
     @GetMapping(value = "/{id}")
@@ -63,7 +61,7 @@ public class ExamController {
     public ResponseEntity<ExamDTO> updateExam(@RequestBody ExamDTO examDTO) {
         Exam exam = examMapper.convertToEntity(examDTO);
         try {
-            exam.setId(examDTO.getId());
+            exam.setExam_id(examDTO.getExam_id());
             exam = examService.save(exam);
             return new ResponseEntity<>(examMapper.convertToDto(exam), HttpStatus.OK);
         } catch (Exception e) {

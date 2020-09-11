@@ -63,7 +63,7 @@ public class TransactionController {
     public ResponseEntity<TransactionDTO> updateTransaction(@RequestBody TransactionDTO transactionDTO) {
         Transaction transaction = transactionMapper.convertToEntity(transactionDTO);
         try {
-            transaction.setId(transactionDTO.getId());
+            transaction.setTransaction_id(transactionDTO.getTransaction_id());
             transaction = transactionService.save(transaction);
             return new ResponseEntity<>(transactionMapper.convertToDto(transaction), HttpStatus.OK);
         } catch (Exception e) {

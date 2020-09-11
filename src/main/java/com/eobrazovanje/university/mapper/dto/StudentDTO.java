@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class StudentDTO implements Serializable {
 
-    private Long id;
+    private Long student_id;
     private String first_name;
     private String last_name;
     private String index_number;
@@ -16,25 +16,25 @@ public class StudentDTO implements Serializable {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private UserDTO user;
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonManagedReference(value = "student-enrollments")
     private Set<CourseEnrollmentDTO> enrollments = new HashSet<CourseEnrollmentDTO>();
-    @JsonManagedReference
+    @JsonManagedReference(value = "student-documents")
     @JsonIgnore
     private Set<DocumentDTO> documents = new HashSet<DocumentDTO>();
-    @JsonManagedReference
+    @JsonManagedReference(value = "student-transactions")
     @JsonIgnore
     private Set<TransactionDTO> transactions = new HashSet<TransactionDTO>();
-    @JsonManagedReference
-    @JsonIgnore
-    private Set<ExamDTO> exams = new HashSet<ExamDTO>();
+//    @JsonManagedReference(value = "student-exam-registrations")
+    private Set<ExamRegistrationDTO> examRegistrations = new HashSet<ExamRegistrationDTO>();
     private Boolean deleted;
 
     public StudentDTO() {
     }
 
-    public StudentDTO(Long id, String first_name, String last_name, String index_number, Double account_balance, UserDTO user, Set<CourseEnrollmentDTO> enrollments, Set<DocumentDTO> documents, Set<TransactionDTO> transactions, Set<ExamDTO> exams, Boolean deleted) {
-        this.id = id;
+    public StudentDTO(Long student_id, String first_name, String last_name, String index_number, Double account_balance,
+                      UserDTO user, Set<CourseEnrollmentDTO> enrollments, Set<DocumentDTO> documents,
+                      Set<TransactionDTO> transactions, Set<ExamRegistrationDTO> examRegistrations, Boolean deleted) {
+        this.student_id = student_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.index_number = index_number;
@@ -43,16 +43,20 @@ public class StudentDTO implements Serializable {
         this.enrollments = enrollments;
         this.documents = documents;
         this.transactions = transactions;
-        this.exams = exams;
+        this.examRegistrations = examRegistrations;
         this.deleted = deleted;
     }
 
-    public Long getId() {
-        return id;
+    public Long getStudent_id() {
+        return student_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setStudent_id(Long student_id) {
+        this.student_id = student_id;
+    }
+
+    public void setExamRegistrations(Set<ExamRegistrationDTO> examRegistrations) {
+        this.examRegistrations = examRegistrations;
     }
 
     public String getFirst_name() {
@@ -119,12 +123,12 @@ public class StudentDTO implements Serializable {
         this.transactions = transactions;
     }
 
-    public Set<ExamDTO> getExams() {
-        return exams;
+    public Set<ExamRegistrationDTO> getExamRegistrations() {
+        return examRegistrations;
     }
 
-    public void setExams(Set<ExamDTO> exams) {
-        this.exams = exams;
+    public void setExams(Set<ExamRegistrationDTO> examRegistrations) {
+        this.examRegistrations = examRegistrations;
     }
 
     public Boolean getDeleted() {

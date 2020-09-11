@@ -8,22 +8,22 @@ import java.util.Set;
 
 public class TeacherDTO implements Serializable {
 
-    private Long id;
+    private Long teacher_id;
     private String first_name;
     private String last_name;
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private UserDTO user;
     @JsonManagedReference
-    @JsonIgnore
     private Set<TeacherEngagementDTO> engagements = new HashSet<TeacherEngagementDTO>();
     private Boolean deleted;
 
     public TeacherDTO() {
     }
 
-    public TeacherDTO(Long id, String first_name, String last_name, UserDTO user, Set<TeacherEngagementDTO> engagements, Boolean deleted) {
-        this.id = id;
+    public TeacherDTO(Long teacher_id, String first_name, String last_name, UserDTO user, Set<TeacherEngagementDTO> engagements,
+                      Boolean deleted) {
+        this.teacher_id = teacher_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.user = user;
@@ -31,12 +31,12 @@ public class TeacherDTO implements Serializable {
         this.deleted = deleted;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTeacher_id() {
+        return teacher_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTeacher_id(Long teacher_id) {
+        this.teacher_id = teacher_id;
     }
 
     public String getFirst_name() {

@@ -4,13 +4,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "exam_registration")
+@Table(name = "exam_registrations")
 public class ExamRegistration implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exam_registration_id", unique = true, nullable = false)
-    private Long id;
+    private Long exam_registration_id;
+
+    @Column(name = "colloquium_points")
+    private int colloquium_points;
+
+    @Column(name = "exam_points")
+    private int exam_points;
 
     @Column(name = "grade")
     private int grade;
@@ -18,10 +24,6 @@ public class ExamRegistration implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
-
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "term", referencedColumnName = "term_id", nullable = false)
-    private Term term;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "exam", referencedColumnName = "exam_id", nullable = false)
@@ -40,12 +42,12 @@ public class ExamRegistration implements Serializable {
     public ExamRegistration() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getExam_registration_id() {
+        return exam_registration_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setExam_registration_id(Long exam_registration_id) {
+        this.exam_registration_id = exam_registration_id;
     }
 
     public int getGrade() {
@@ -62,14 +64,6 @@ public class ExamRegistration implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public Term getTerm() {
-        return term;
-    }
-
-    public void setTerm(Term term) {
-        this.term = term;
     }
 
     public Exam getExam() {
@@ -102,5 +96,21 @@ public class ExamRegistration implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public int getColloquium_points() {
+        return colloquium_points;
+    }
+
+    public void setColloquium_points(int colloquium_points) {
+        this.colloquium_points = colloquium_points;
+    }
+
+    public int getExam_points() {
+        return exam_points;
+    }
+
+    public void setExam_points(int exam_points) {
+        this.exam_points = exam_points;
     }
 }

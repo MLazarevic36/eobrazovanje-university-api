@@ -59,7 +59,7 @@ public class CourseController {
     public ResponseEntity<CourseDTO> updateCourse(@RequestBody CourseDTO courseDTO) {
         Course course = courseMapper.convertToEntity(courseDTO);
         try {
-            course.setId(courseDTO.getId());
+            course.setCourse_id(courseDTO.getCourse_id());
             course = courseService.save(course);
             return new ResponseEntity<>(courseMapper.convertToDto(course), HttpStatus.OK);
         } catch (Exception e) {

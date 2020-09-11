@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class CourseDTO implements Serializable {
 
-    private Long id;
+    private Long course_id;
     private String name;
     @JsonManagedReference
     @JsonIgnore
@@ -19,19 +19,19 @@ public class CourseDTO implements Serializable {
     public CourseDTO() {
     }
 
-    public CourseDTO(Long id, String name, Set<TeacherEngagementDTO> engagements, Boolean deleted) {
-        this.id = id;
+    public CourseDTO(Long course_id, String name, Set<TeacherEngagementDTO> engagements, Boolean deleted) {
+        this.course_id = course_id;
         this.name = name;
         this.engagements = engagements;
         this.deleted = deleted;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCourse_id() {
+        return course_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCourse_id(Long course_id) {
+        this.course_id = course_id;
     }
 
     public String getName() {

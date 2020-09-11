@@ -12,7 +12,7 @@ public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id", unique = true, nullable = false)
-    private Long id;
+    private Long student_id;
 
     @Column(name = "first_name", nullable = false)
     private String first_name;
@@ -39,8 +39,8 @@ public class Student implements Serializable {
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private Set<Transaction> transactions = new HashSet<>();
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    private Set<Exam> exams = new HashSet<>();
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ExamRegistration> exam_registrations = new HashSet<>();
 
     @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
     private Boolean deleted;
@@ -48,12 +48,12 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getStudent_id() {
+        return student_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setStudent_id(Long student_id) {
+        this.student_id = student_id;
     }
 
     public String getFirst_name() {
@@ -120,12 +120,12 @@ public class Student implements Serializable {
         this.transactions = transactions;
     }
 
-    public Set<Exam> getExams() {
-        return exams;
+    public Set<ExamRegistration> getExam_registrations() {
+        return exam_registrations;
     }
 
-    public void setExams(Set<Exam> exams) {
-        this.exams = exams;
+    public void setExam_registrations(Set<ExamRegistration> exam_registrations) {
+        this.exam_registrations = exam_registrations;
     }
 
     public Boolean getDeleted() {
@@ -135,4 +135,5 @@ public class Student implements Serializable {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
 }

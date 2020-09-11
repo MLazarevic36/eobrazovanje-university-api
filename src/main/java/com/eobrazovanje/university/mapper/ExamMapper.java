@@ -27,6 +27,10 @@ public class ExamMapper {
         return examPage.stream().map(this::convertToDto).collect(Collectors.toSet());
     }
 
+    public Set<ExamDTO> convertToDtosSet(Set<Exam> exams) {
+        return exams.stream().map(this::convertToDto).collect(Collectors.toSet());
+    }
+
     public Exam convertToEntity(ExamDTO examDTO) {
         return modelMapper.map(examDTO, Exam.class);
     }

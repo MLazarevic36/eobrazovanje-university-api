@@ -1,13 +1,18 @@
 package com.eobrazovanje.university.controller;
 
+import com.eobrazovanje.university.config.AppConstants;
 import com.eobrazovanje.university.entity.Term;
 import com.eobrazovanje.university.mapper.TermMapper;
 import com.eobrazovanje.university.mapper.dto.ExamDTO;
+import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.mapper.dto.TermDTO;
+import com.eobrazovanje.university.mapper.dto.UserDTO;
 import com.eobrazovanje.university.service.TermService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +30,10 @@ public class TermController {
     private TermMapper termMapper;
 
     @GetMapping
-    public ResponseEntity<Set<TermDTO>> getTerms(Pageable pageable) {
-        try {
-            Page<Term> terms = termService.findAll(pageable);
-            return new ResponseEntity<>(termMapper.convertToDtos(terms),
-                    HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public PagedResponse<TermDTO> getTerms(@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                           @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+
+        return termService.getAllTerms(page, size);
     }
 
     @GetMapping(value = "/{id}")
@@ -64,7 +64,7 @@ public class TermController {
     public ResponseEntity<TermDTO> updateTerm(@RequestBody TermDTO termDTO) {
         Term term = termMapper.convertToEntity(termDTO);
         try {
-            term.setId(termDTO.getId());
+            term.setTerm_id(termDTO.getTerm_id());
             term = termService.save(term);
             return new ResponseEntity<>(termMapper.convertToDto(term), HttpStatus.OK);
         } catch (Exception e) {

@@ -1,12 +1,11 @@
 package com.eobrazovanje.university.controller;
 
 import com.eobrazovanje.university.config.AppConstants;
-import com.eobrazovanje.university.entity.Teacher;
-import com.eobrazovanje.university.entity.User;
+import com.eobrazovanje.university.entity.*;
+import com.eobrazovanje.university.mapper.ExamRegistrationMapper;
 import com.eobrazovanje.university.mapper.TeacherMapper;
 import com.eobrazovanje.university.mapper.UserMapper;
-import com.eobrazovanje.university.mapper.dto.PagedResponse;
-import com.eobrazovanje.university.mapper.dto.TeacherDTO;
+import com.eobrazovanje.university.mapper.dto.*;
 import com.eobrazovanje.university.repository.UserRepository;
 import com.eobrazovanje.university.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +33,9 @@ public class TeacherController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private ExamRegistrationMapper examRegistrationMapper;
+
     @GetMapping
     public PagedResponse<TeacherDTO> getTeachers(@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                  @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
@@ -49,6 +51,12 @@ public class TeacherController {
             ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "/{id}/engagements")
+    public PagedResponse<TeacherEngagementDTO> getTeacherEngagements(@PathVariable("id") Long id, @RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                                     @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
+        return teacherService.getAllTeacherEngagements(id, page, size);
     }
 
     @PostMapping
@@ -70,7 +78,7 @@ public class TeacherController {
     public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody TeacherDTO teacherDTO) {
         Teacher teacher = teacherMapper.convertToEntity(teacherDTO);
         try {
-            teacher.setId(teacherDTO.getId());
+            teacher.setTeacher_id(teacherDTO.getTeacher_id());
             teacher = teacherService.save(teacher);
             return new ResponseEntity<>(teacherMapper.convertToDto(teacher), HttpStatus.OK);
         } catch (Exception e) {
@@ -89,6 +97,25 @@ public class TeacherController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<TeacherDTO> getTeacherByUser(@PathVariable("id") Long id){
+        try {
+            Teacher teacher = teacherService.getTeacherByUser(id);
+            return new ResponseEntity<>(teacherMapper.convertToDto(teacher), HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/{id}/exams")
+    public PagedResponse<ExamRegistrationDTO> getTeacherExams(@PathVariable("id") Long id, @RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                                    @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
+
+        return teacherService.getTeacherExams(id, page, size);
+
     }
 
 

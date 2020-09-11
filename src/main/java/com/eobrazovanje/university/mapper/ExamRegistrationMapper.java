@@ -2,8 +2,10 @@ package com.eobrazovanje.university.mapper;
 
 import com.eobrazovanje.university.entity.Exam;
 import com.eobrazovanje.university.entity.ExamRegistration;
+import com.eobrazovanje.university.entity.Term;
 import com.eobrazovanje.university.mapper.dto.ExamDTO;
 import com.eobrazovanje.university.mapper.dto.ExamRegistrationDTO;
+import com.eobrazovanje.university.mapper.dto.TermDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,10 @@ public class ExamRegistrationMapper {
 
     public Set<ExamRegistrationDTO> convertToDtos(Page<ExamRegistration> examRegistrationPage) {
         return examRegistrationPage.stream().map(this::convertToDto).collect(Collectors.toSet());
+    }
+
+    public Set<ExamRegistrationDTO> convertToDtosSet(Set<ExamRegistration> exams) {
+        return exams.stream().map(this::convertToDto).collect(Collectors.toSet());
     }
 
     public ExamRegistration convertToEntity(ExamRegistrationDTO examRegistrationDTO) {

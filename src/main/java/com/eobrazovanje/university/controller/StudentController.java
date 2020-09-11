@@ -1,14 +1,13 @@
 package com.eobrazovanje.university.controller;
 
 import com.eobrazovanje.university.config.AppConstants;
-import com.eobrazovanje.university.entity.Student;
-import com.eobrazovanje.university.entity.User;
-import com.eobrazovanje.university.mapper.StudentMapper;
-import com.eobrazovanje.university.mapper.UserMapper;
-import com.eobrazovanje.university.mapper.dto.PagedResponse;
-import com.eobrazovanje.university.mapper.dto.StudentDTO;
+import com.eobrazovanje.university.entity.*;
+import com.eobrazovanje.university.mapper.*;
+import com.eobrazovanje.university.mapper.dto.*;
 import com.eobrazovanje.university.repository.UserRepository;
 import com.eobrazovanje.university.service.StudentService;
+import com.eobrazovanje.university.service.TermService;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +33,18 @@ public class StudentController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private CourseEnrollmentMapper courseEnrollmentMapper;
+
+    @Autowired
+    private ExamMapper examMapper;
+
+    @Autowired
+    private TermService termService;
+
+    @Autowired
+    private TermMapper termMapper;
+
     @GetMapping
     public PagedResponse<StudentDTO> getStudents (@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                   @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
@@ -49,6 +60,54 @@ public class StudentController {
             ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<StudentDTO> getStudentByUser(@PathVariable("id") Long id){
+        try {
+            Student student = studentService.getStudentByUser(id);
+            return new ResponseEntity<>(studentMapper.convertToDto(student), HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/{id}/enrollments")
+    public PagedResponse<CourseEnrollmentDTO> getStudentEnrollments(@PathVariable("id") Long id, @RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                                    @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
+        return studentService.getAllStudentEnrollments(id, page, size);
+    }
+
+    @GetMapping(value = "/{id}/transactions")
+    public PagedResponse<TransactionDTO> getStudentTransactions(@PathVariable("id") Long id, @RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                             @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
+        return studentService.getAllStudentTransactions(id, page, size);
+    }
+
+    @GetMapping(value = "/{id}/exams")
+    public ResponseEntity<Set<ExamDTO>> getStudentExams(@PathVariable("id") Long id){
+        try {
+            Set<Exam> exams = studentService.getStudentExams(id);
+            return new ResponseEntity<>(examMapper.convertToDtosSet(exams), HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/{id}/terms")
+    public ResponseEntity<Set<TermDTO>> getStudentTerms(@PathVariable("id") Long id){
+
+        try {
+            Set<Term> terms = termService.getAllTermsForStudentNotRegisteredExams(id);
+            return new ResponseEntity<>(termMapper.convertToDtosSet(terms), HttpStatus.OK);
+
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @PostMapping
@@ -69,7 +128,7 @@ public class StudentController {
     public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO) {
         Student student = studentMapper.convertToEntity(studentDTO);
         try {
-            student.setId(studentDTO.getId());
+            student.setStudent_id(studentDTO.getStudent_id());
             student = studentService.save(student);
             return new ResponseEntity<>(studentMapper.convertToDto(student), HttpStatus.OK);
         } catch (Exception e) {

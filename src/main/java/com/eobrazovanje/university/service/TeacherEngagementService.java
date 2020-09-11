@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class TeacherEngagementService implements TeacherEngagementInterface {
 
@@ -38,5 +40,9 @@ public class TeacherEngagementService implements TeacherEngagementInterface {
     public void delete(Teacher_engagement teacher_engagement) {
         teacher_engagement.setDeleted(true);
         teacherEngagementRepository.save(teacher_engagement);
+    }
+
+    public Page<Teacher_engagement> getTeachersEngagementsByRole(Long id, Pageable pageable) {
+        return teacherEngagementRepository.findAllByDeletedAndTeacherAndRole(id, pageable);
     }
 }

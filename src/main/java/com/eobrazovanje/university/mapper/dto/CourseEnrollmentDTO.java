@@ -9,31 +9,30 @@ import java.io.Serializable;
 
 public class CourseEnrollmentDTO implements Serializable {
 
-    private Long id;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
+    private Long course_enrollment_id;
     private CourseDTO course;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "student_id")
     @JsonIdentityReference(alwaysAsId = true)
+    @JsonBackReference(value = "student-enrollments")
     private StudentDTO student;
     private Boolean deleted;
 
     public CourseEnrollmentDTO() {
     }
 
-    public CourseEnrollmentDTO(Long id, CourseDTO course, StudentDTO student, Boolean deleted) {
-        this.id = id;
+    public CourseEnrollmentDTO(Long course_enrollment_id, CourseDTO course, StudentDTO student, Boolean deleted) {
+        this.course_enrollment_id = course_enrollment_id;
         this.course = course;
         this.student = student;
         this.deleted = deleted;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCourse_enrollment_id() {
+        return course_enrollment_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCourse_enrollment_id(Long course_enrollment_id) {
+        this.course_enrollment_id = course_enrollment_id;
     }
 
     public Boolean getDeleted() {

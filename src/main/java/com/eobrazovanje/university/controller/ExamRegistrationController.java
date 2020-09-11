@@ -1,8 +1,20 @@
 package com.eobrazovanje.university.controller;
 
+import com.eobrazovanje.university.config.AppConstants;
+import com.eobrazovanje.university.entity.Exam;
 import com.eobrazovanje.university.entity.ExamRegistration;
+import com.eobrazovanje.university.entity.Student;
+import com.eobrazovanje.university.entity.Term;
+import com.eobrazovanje.university.mapper.ExamMapper;
 import com.eobrazovanje.university.mapper.ExamRegistrationMapper;
+import com.eobrazovanje.university.mapper.StudentMapper;
+import com.eobrazovanje.university.mapper.TermMapper;
+import com.eobrazovanje.university.mapper.dto.ExamDTO;
 import com.eobrazovanje.university.mapper.dto.ExamRegistrationDTO;
+import com.eobrazovanje.university.mapper.dto.PagedResponse;
+import com.eobrazovanje.university.repository.ExamRepository;
+import com.eobrazovanje.university.repository.StudentRepository;
+import com.eobrazovanje.university.repository.TermRepository;
 import com.eobrazovanje.university.service.ExamRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,16 +35,30 @@ public class ExamRegistrationController {
     @Autowired
     private ExamRegistrationMapper examRegistrationMapper;
 
+    @Autowired
+    private ExamRepository examRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private ExamMapper examMapper;
+
+    @Autowired
+    private StudentMapper studentMapper;
+
     @GetMapping
-    public ResponseEntity<Set<ExamRegistrationDTO>> getExamRegistrations(Pageable pageable) {
-        try {
-            Page<ExamRegistration> examRegistrations = examRegistrationService.findAll(pageable);
-            return new ResponseEntity<>(examRegistrationMapper.convertToDtos(examRegistrations),
-                    HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public PagedResponse<ExamRegistrationDTO> getExamsRegistrations(@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                           @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+
+        return examRegistrationService.getAllExamRegistrations(page, size);
+    }
+
+    @GetMapping(value = "/student/{id}")
+    public PagedResponse<ExamRegistrationDTO> getExamRegistrationsByStudent(@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                       @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size, @PathVariable("id") Long id) {
+
+        return examRegistrationService.getAllExamRegistrationsByStudent(id, page, size);
     }
 
     @GetMapping(value = "/{id}")
@@ -48,6 +74,10 @@ public class ExamRegistrationController {
 
     @PostMapping
     public ResponseEntity<ExamRegistrationDTO> addExamRegistration(@RequestBody ExamRegistrationDTO examRegistrationDTO) {
+        Exam exam = examRepository.getOne(examRegistrationDTO.getExam().getExam_id());
+//        Student student = studentRepository.getOne(examRegistrationDTO.getStudent().getStudent_id());
+//        examRegistrationDTO.setExam(examMapper.convertToDto(exam));
+//        examRegistrationDTO.setStudent(studentMapper.convertToDto(student));
         ExamRegistration examRegistration = examRegistrationMapper.convertToEntity(examRegistrationDTO);
         try {
             examRegistration = examRegistrationService.save(examRegistration);
@@ -63,8 +93,8 @@ public class ExamRegistrationController {
     public ResponseEntity<ExamRegistrationDTO> updateExamRegistration(@RequestBody ExamRegistrationDTO examRegistrationDTO) {
         ExamRegistration examRegistration = examRegistrationMapper.convertToEntity(examRegistrationDTO);
         try {
-            examRegistration.setId(examRegistrationDTO.getId());
-            examRegistration = examRegistrationService.save(examRegistration);
+            examRegistration.setExam_registration_id(examRegistrationDTO.getExam_registration_id());
+            examRegistration = examRegistrationService.update(examRegistration);
             return new ResponseEntity<>(examRegistrationMapper.convertToDto(examRegistration), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

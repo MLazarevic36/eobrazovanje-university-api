@@ -1,19 +1,23 @@
 package com.eobrazovanje.university.service;
 
-import com.eobrazovanje.university.entity.Teacher;
+import com.eobrazovanje.university.entity.*;
+import com.eobrazovanje.university.mapper.ExamRegistrationMapper;
+import com.eobrazovanje.university.mapper.TeacherEngagementMapper;
 import com.eobrazovanje.university.mapper.TeacherMapper;
+import com.eobrazovanje.university.mapper.dto.ExamRegistrationDTO;
 import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.mapper.dto.TeacherDTO;
+import com.eobrazovanje.university.mapper.dto.TeacherEngagementDTO;
+import com.eobrazovanje.university.repository.ExamRegistrationRepository;
+import com.eobrazovanje.university.repository.TeacherEngagementRepository;
 import com.eobrazovanje.university.repository.TeacherRepository;
 import com.eobrazovanje.university.service.interfaces.TeacherInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.*;
 
 @Service
 public class TeacherService implements TeacherInterface {
@@ -23,6 +27,18 @@ public class TeacherService implements TeacherInterface {
 
     @Autowired
     private TeacherMapper teacherMapper;
+
+    @Autowired
+    private ExamRegistrationRepository examRegistrationRepository;
+
+    @Autowired
+    private TeacherEngagementRepository teacherEngagementRepository;
+
+    @Autowired
+    private TeacherEngagementMapper teacherEngagementMapper;
+
+    @Autowired
+    private ExamRegistrationMapper examRegistrationMapper;
 
     @Override
     public Teacher findOne(Long id) {
@@ -63,4 +79,46 @@ public class TeacherService implements TeacherInterface {
                 teachers.getTotalElements(), teachers.getTotalPages(), teachers.isLast());
 
     }
+
+    public PagedResponse<TeacherEngagementDTO> getAllTeacherEngagements(Long id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "teacher_engagement_id");
+        Page<Teacher_engagement> teacher_engagements = teacherEngagementRepository.findAllByDeletedAndTeacher(id, pageable);
+
+        if (teacher_engagements.getNumberOfElements() == 0) {
+            return new PagedResponse<TeacherEngagementDTO>(Collections.emptySet(), teacher_engagements.getNumber(), teacher_engagements.getSize(),
+                    teacher_engagements.getTotalElements(), teacher_engagements.getTotalPages(), teacher_engagements.isLast());
+        }
+
+        return new PagedResponse<TeacherEngagementDTO>(teacherEngagementMapper.convertToDtos(teacher_engagements), teacher_engagements.getNumber(), teacher_engagements.getSize(),
+                teacher_engagements.getTotalElements(), teacher_engagements.getTotalPages(), teacher_engagements.isLast());
+
+    }
+
+    public Teacher getTeacherByUser(Long id) {
+        return teacherRepository.findTeacherByUser(id);
+    }
+
+    public PagedResponse<ExamRegistrationDTO> getTeacherExams(Long id, int page, int size) {
+        Set<ExamRegistration> exams = new HashSet<>();
+        Set<ExamRegistration> all_exams = examRegistrationRepository.findAllByDeletedSet();
+        Teacher_engagement t = teacherEngagementRepository.getOne(id);
+        for(ExamRegistration e : all_exams) {
+            if(e.getExam().getCourse().getCourse_id() == t.getCourse().getCourse_id()) {
+                exams.add(e);
+            }
+        }
+        List<ExamRegistration> list_exams = new ArrayList<>(exams);
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "exam_registration_id");
+        Page<ExamRegistration> pageExams = new PageImpl<ExamRegistration>(list_exams, pageable, list_exams.size());
+
+        if (pageExams.getNumberOfElements() == 0) {
+            return new PagedResponse<ExamRegistrationDTO>(Collections.emptySet(), pageExams.getNumber(), pageExams.getSize(),
+                    pageExams.getTotalElements(), pageExams.getTotalPages(), pageExams.isLast());
+        }
+
+        return new PagedResponse<ExamRegistrationDTO>(examRegistrationMapper.convertToDtos(pageExams), pageExams.getNumber(), pageExams.getSize(),
+                pageExams.getTotalElements(), pageExams.getTotalPages(), pageExams.isLast());
+    }
+
+
 }

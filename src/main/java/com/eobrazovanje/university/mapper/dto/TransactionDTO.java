@@ -7,8 +7,8 @@ import java.util.Date;
 
 public class TransactionDTO implements Serializable {
 
-    private Long id;
-    @JsonBackReference
+    private Long transaction_id;
+    @JsonBackReference(value = "student-transactions")
     private StudentDTO student;
     private String purpose;
     private Double amount;
@@ -18,8 +18,8 @@ public class TransactionDTO implements Serializable {
     public TransactionDTO() {
     }
 
-    public TransactionDTO(Long id, StudentDTO student, String purpose, Double amount, Date date, Boolean deleted) {
-        this.id = id;
+    public TransactionDTO(Long transaction_id, StudentDTO student, String purpose, Double amount, Date date, Boolean deleted) {
+        this.transaction_id = transaction_id;
         this.student = student;
         this.purpose = purpose;
         this.amount = amount;
@@ -27,12 +27,12 @@ public class TransactionDTO implements Serializable {
         this.deleted = deleted;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTransaction_id() {
+        return transaction_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTransaction_id(Long transaction_id) {
+        this.transaction_id = transaction_id;
     }
 
     public StudentDTO getStudent() {

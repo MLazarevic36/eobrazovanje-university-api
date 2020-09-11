@@ -25,6 +25,10 @@ public class CourseEnrollmentMapper {
         return courseEnrollmentPage.stream().map(this::convertToDto).collect(Collectors.toSet());
     }
 
+    public Set<CourseEnrollmentDTO> convertToDtosSet(Set<Course_enrollment> courseEnrollmentPage) {
+        return courseEnrollmentPage.stream().map(this::convertToDto).collect(Collectors.toSet());
+    }
+
     public Course_enrollment convertToEntity(CourseEnrollmentDTO courseEnrollmentDTO) {
         return modelMapper.map(courseEnrollmentDTO, Course_enrollment.class);
     }

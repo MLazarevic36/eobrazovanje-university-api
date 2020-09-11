@@ -14,41 +14,41 @@ import java.util.Set;
 
 public class ExamDTO implements Serializable {
 
-    private Long id;
+    private Long exam_id;
     private CourseDTO course;
     private Timestamp date;
-    private int colloquium_points;
-    private int exam_points;
     private String location;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    private double price;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "term_id")
     @JsonIdentityReference(alwaysAsId = true)
+    @JsonBackReference(value="term-exams")
     private TermDTO term;
-    @JsonManagedReference
+//    @JsonManagedReference(value = "exams-exam-registrations")
+    @JsonIgnore
     private Set<ExamRegistrationDTO> examRegistrations = new HashSet<ExamRegistrationDTO>();
     private Boolean deleted;
 
     public ExamDTO() {
     }
 
-    public ExamDTO(Long id, CourseDTO course, Timestamp date, int colloquium_points, int exam_points, String location,
-                   TermDTO term, Set<ExamRegistrationDTO> examRegistrations, Boolean deleted) {
-        this.id = id;
+    public ExamDTO(Long exam_id, CourseDTO course, Timestamp date, String location,
+                   double price, TermDTO term, Set<ExamRegistrationDTO> examRegistrations, Boolean deleted) {
+        this.exam_id = exam_id;
         this.course = course;
         this.date = date;
-        this.colloquium_points = colloquium_points;
-        this.exam_points = exam_points;
         this.location = location;
+        this.price = price;
         this.term = term;
         this.examRegistrations = examRegistrations;
         this.deleted = deleted;
     }
 
-    public Long getId() {
-        return id;
+    public Long getExam_id() {
+        return exam_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setExam_id(Long exam_id) {
+        this.exam_id = exam_id;
     }
 
     public CourseDTO getCourse() {
@@ -65,22 +65,6 @@ public class ExamDTO implements Serializable {
 
     public void setDate(Timestamp date) {
         this.date = date;
-    }
-
-    public int getColloquium_points() {
-        return colloquium_points;
-    }
-
-    public void setColloquium_points(int colloquium_points) {
-        this.colloquium_points = colloquium_points;
-    }
-
-    public int getExam_points() {
-        return exam_points;
-    }
-
-    public void setExam_points(int exam_points) {
-        this.exam_points = exam_points;
     }
 
     public String getLocation() {
@@ -113,5 +97,13 @@ public class ExamDTO implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
