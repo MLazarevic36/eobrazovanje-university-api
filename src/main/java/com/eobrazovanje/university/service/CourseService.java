@@ -63,7 +63,6 @@ public class CourseService implements CourseInterface {
 
         return new PagedResponse<CourseDTO>(courseMapper.convertToDtos(courses), courses.getNumber(), courses.getSize(),
                 courses.getTotalElements(), courses.getTotalPages(), courses.isLast());
-
-
     }
+
 }

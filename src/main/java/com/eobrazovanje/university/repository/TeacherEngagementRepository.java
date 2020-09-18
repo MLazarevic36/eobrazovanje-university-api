@@ -17,6 +17,9 @@ public interface TeacherEngagementRepository extends JpaRepository<Teacher_engag
     @Query(value = "SELECT * FROM teacher_engagements WHERE deleted=0 AND teacher_id = :teacher_id", nativeQuery = true)
     Page<Teacher_engagement> findAllByDeletedAndTeacher(@Param("teacher_id") Long teacher_id, Pageable pageable);
 
+    @Query(value = "SELECT * FROM teacher_engagements WHERE deleted=0", nativeQuery = true)
+    Page<Teacher_engagement> findAllByDeleted(Pageable pageable);
+
     @Query(value = "SELECT * FROM teacher_engagements WHERE deleted=0 AND teacher_id = :teacher_id AND " +
             "teacher_role = 'PROFESSOR'", nativeQuery = true)
     Page<Teacher_engagement> findAllByDeletedAndTeacherAndRole(@Param("teacher_id") Long teacher_id, Pageable pageable);

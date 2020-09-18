@@ -28,6 +28,9 @@ public class TermService implements TermInterface {
     private ExamRegistrationService examRegistrationService;
 
     @Autowired
+    private ExamRegistrationRepository examRegistrationRepository;
+
+    @Autowired
     private TermMapper termMapper;
 
     @Override
@@ -93,16 +96,15 @@ public class TermService implements TermInterface {
 
     public Set<Term> getAllTermsForStudentNotRegisteredExams(Long id) {
         Set<Term> terms = getAllTermsForStudent(id);
-        Set<ExamRegistration> registrations = studentService.getStudentExamRegistrations(id);
+        Set<ExamRegistration> registrations = examRegistrationRepository.findAllByStudentSet(id);
         for(Term t: terms) {
             Set<Exam> exams = t.getExams();
             Iterator<Exam> iter = exams.iterator();
             while (iter.hasNext()) {
                 Exam exam = iter.next();
                     for (ExamRegistration e : registrations) {
-                        if (exam.getExam_id() == e.getExam().getExam_id() && e.getRegistered() == Boolean.TRUE
-                                && String.valueOf(e.getStatus()).equals("ACTIVE")) {
-                                iter.remove();
+                        if (exam.getExam_id() == e.getExam().getExam_id() && String.valueOf(e.getStatus()).equals("ACTIVE")) {
+                            iter.remove();
                         }
                     }
                 t.setExams(exams);

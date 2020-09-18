@@ -1,6 +1,7 @@
 package com.eobrazovanje.university.mapper.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,17 +9,19 @@ import java.util.Date;
 public class TransactionDTO implements Serializable {
 
     private Long transaction_id;
-    @JsonBackReference(value = "student-transactions")
+
     private StudentDTO student;
     private String purpose;
-    private Double amount;
+    private double amount;
+
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
     private Date date;
     private Boolean deleted;
 
     public TransactionDTO() {
     }
 
-    public TransactionDTO(Long transaction_id, StudentDTO student, String purpose, Double amount, Date date, Boolean deleted) {
+    public TransactionDTO(Long transaction_id, StudentDTO student, String purpose, double amount, Date date, Boolean deleted) {
         this.transaction_id = transaction_id;
         this.student = student;
         this.purpose = purpose;
@@ -51,11 +54,11 @@ public class TransactionDTO implements Serializable {
         this.purpose = purpose;
     }
 
-    public Double getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

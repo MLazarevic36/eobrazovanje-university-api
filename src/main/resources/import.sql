@@ -2,12 +2,13 @@ INSERT INTO users VALUES (1, FALSE, '$2y$12$Zo.7T6sxERtrOOYjkBTEX.NulXfviEQsKOXE
 INSERT INTO users VALUES (2, FALSE, '$2y$12$0wrqOMcG4lRQE3oBfnH55eiwk4PrTvufh1Js.waLm1YZdNxeGRXnq', 'STUDENT', 'student');
 INSERT INTO users VALUES (3, FALSE, '$2y$12$1XoO6QguCvM7yupJG70kPuNFvLDd2SIkBcytAOGITDHUyNh4BItXy', 'TEACHER', 'sava');
 INSERT INTO users VALUES (4, FALSE, '$2y$12$ThSoGHO/V6kPvMFgDkTYNO5QfMZF93.NZRFfS1twlJ5GkA1fscLcK', 'ADMIN', 'admin');
+INSERT INTO users VALUES (5, FALSE, '$2y$12$GIKCkpXVo.o76hzEdka2oetUpdHGbFOuEyunmgW.EixnUITuoK79.', 'TEACHER', 'teacher');
 
 
 INSERT INTO students VALUES (1, 1000.0, FALSE, 'miloslav', 'sf828282', 'kitic', 1);
 INSERT INTO students VALUES (2, 1000.0, FALSE, 'student', 'sf299229', 'student', 2);
 
-INSERT INTO teachers VALUES (1, FALSE, 'stevan', 'stevanovic', 2);
+INSERT INTO teachers VALUES (1, FALSE, 'stevan', 'stevanovic', 5);
 INSERT INTO teachers VALUES (2, FALSE, 'sava', 'sumanovic', 3);
 
 INSERT INTO courses VALUES (1, FALSE, 'Osnove web programiranja');
@@ -52,5 +53,5 @@ INSERT INTO exams VALUES (9, '2020-09-21 12:00:00', FALSE, 'pc34', 300.0, 3, 3);
 
 INSERT INTO exam_registrations VALUES (1, 0, FALSE, 0, 5, TRUE, 'ACTIVE', 1, 1);
 INSERT INTO exam_registrations VALUES (2, 22, FALSE, 30, 6, TRUE, 'PASSED', 4, 1);
-INSERT INTO exam_registrations VALUES (3, 0, FALSE, 0, 0, FALSE, 'ACTIVE', 4, 2);
+INSERT INTO exam_registrations VALUES (3, 0, FALSE, 0, 0, TRUE, 'ACTIVE', 4, 2);
 INSERT INTO exam_registrations VALUES (4, 30, FALSE, 51, 9, TRUE, 'PASSED', 2, 2);

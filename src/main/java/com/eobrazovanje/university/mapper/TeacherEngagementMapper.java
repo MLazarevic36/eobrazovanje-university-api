@@ -1,9 +1,6 @@
 package com.eobrazovanje.university.mapper;
 
-import com.eobrazovanje.university.entity.Course;
-import com.eobrazovanje.university.entity.Teacher;
 import com.eobrazovanje.university.entity.Teacher_engagement;
-import com.eobrazovanje.university.mapper.dto.CourseDTO;
 import com.eobrazovanje.university.mapper.dto.TeacherEngagementDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

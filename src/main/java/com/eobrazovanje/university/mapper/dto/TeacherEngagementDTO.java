@@ -12,9 +12,9 @@ public class TeacherEngagementDTO implements Serializable {
 
     private Long teacher_engagement_id;
     private CourseDTO course;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "teacher_id")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonBackReference
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "teacher_id")
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonBackReference
     private TeacherDTO teacher;
     private Teacher_role teacher_role;
     private Boolean deleted;

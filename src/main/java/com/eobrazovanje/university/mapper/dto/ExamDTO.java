@@ -5,6 +5,7 @@ import com.eobrazovanje.university.entity.Status;
 import com.eobrazovanje.university.entity.Term;
 import com.fasterxml.jackson.annotation.*;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.sql.Time;
@@ -16,7 +17,10 @@ public class ExamDTO implements Serializable {
 
     private Long exam_id;
     private CourseDTO course;
+
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
     private Timestamp date;
+
     private String location;
     private double price;
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "term_id")

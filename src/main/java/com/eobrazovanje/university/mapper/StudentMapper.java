@@ -1,13 +1,8 @@
 package com.eobrazovanje.university.mapper;
 
-import com.eobrazovanje.university.entity.Course;
 import com.eobrazovanje.university.entity.Student;
-import com.eobrazovanje.university.mapper.dto.CourseDTO;
 import com.eobrazovanje.university.mapper.dto.StudentDTO;
-import com.eobrazovanje.university.mapper.dto.StudentInfo;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;

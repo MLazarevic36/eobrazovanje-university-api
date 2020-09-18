@@ -1,10 +1,7 @@
 package com.eobrazovanje.university.controller;
 
 import com.eobrazovanje.university.config.AppConstants;
-import com.eobrazovanje.university.entity.Exam;
-import com.eobrazovanje.university.entity.ExamRegistration;
-import com.eobrazovanje.university.entity.Student;
-import com.eobrazovanje.university.entity.Term;
+import com.eobrazovanje.university.entity.*;
 import com.eobrazovanje.university.mapper.ExamMapper;
 import com.eobrazovanje.university.mapper.ExamRegistrationMapper;
 import com.eobrazovanje.university.mapper.StudentMapper;
@@ -61,6 +58,13 @@ public class ExamRegistrationController {
         return examRegistrationService.getAllExamRegistrationsByStudent(id, page, size);
     }
 
+    @GetMapping(value = "/student/passed/{id}")
+    public PagedResponse<ExamRegistrationDTO> getExamRegistrationsByStudentPassed(@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                                            @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size, @PathVariable("id") Long id) {
+
+        return examRegistrationService.getAllExamRegistrationsByStudentPassed(id, page, size);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<ExamRegistrationDTO> getExamRegistration(@PathVariable("id") Long id){
         try {
@@ -75,9 +79,7 @@ public class ExamRegistrationController {
     @PostMapping
     public ResponseEntity<ExamRegistrationDTO> addExamRegistration(@RequestBody ExamRegistrationDTO examRegistrationDTO) {
         Exam exam = examRepository.getOne(examRegistrationDTO.getExam().getExam_id());
-//        Student student = studentRepository.getOne(examRegistrationDTO.getStudent().getStudent_id());
-//        examRegistrationDTO.setExam(examMapper.convertToDto(exam));
-//        examRegistrationDTO.setStudent(studentMapper.convertToDto(student));
+        examRegistrationDTO.setExam(examMapper.convertToDto(exam));
         ExamRegistration examRegistration = examRegistrationMapper.convertToEntity(examRegistrationDTO);
         try {
             examRegistration = examRegistrationService.save(examRegistration);

@@ -1,7 +1,9 @@
 package com.eobrazovanje.university.controller;
 
+import com.eobrazovanje.university.config.AppConstants;
 import com.eobrazovanje.university.entity.Teacher_engagement;
 import com.eobrazovanje.university.mapper.TeacherEngagementMapper;
+import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.mapper.dto.TeacherEngagementDTO;
 import com.eobrazovanje.university.service.TeacherEngagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +26,9 @@ public class TeacherEngagementController {
     private TeacherEngagementMapper teacherEngagementMapper;
 
     @GetMapping
-    public ResponseEntity<Set<TeacherEngagementDTO>> getTeacherEngagements(Pageable pageable) {
-        try {
-            Page<Teacher_engagement> engagements = teacherEngagementService.findAll(pageable);
-            return new ResponseEntity<>(teacherEngagementMapper.convertToDtos(engagements),
-                    HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public PagedResponse<TeacherEngagementDTO> getTeacherEngagements(@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                                     @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+        return teacherEngagementService.getAllEngagements(page, size);
     }
 
     @GetMapping(value = "/professor/{id}")

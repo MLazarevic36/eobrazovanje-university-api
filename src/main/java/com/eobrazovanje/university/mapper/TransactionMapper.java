@@ -1,8 +1,6 @@
 package com.eobrazovanje.university.mapper;
 
-import com.eobrazovanje.university.entity.Teacher;
 import com.eobrazovanje.university.entity.Transaction;
-import com.eobrazovanje.university.mapper.dto.TeacherDTO;
 import com.eobrazovanje.university.mapper.dto.TransactionDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

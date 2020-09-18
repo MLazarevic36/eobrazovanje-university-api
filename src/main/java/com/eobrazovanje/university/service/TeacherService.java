@@ -4,16 +4,12 @@ import com.eobrazovanje.university.entity.*;
 import com.eobrazovanje.university.mapper.ExamRegistrationMapper;
 import com.eobrazovanje.university.mapper.TeacherEngagementMapper;
 import com.eobrazovanje.university.mapper.TeacherMapper;
-import com.eobrazovanje.university.mapper.dto.ExamRegistrationDTO;
-import com.eobrazovanje.university.mapper.dto.PagedResponse;
-import com.eobrazovanje.university.mapper.dto.TeacherDTO;
-import com.eobrazovanje.university.mapper.dto.TeacherEngagementDTO;
+import com.eobrazovanje.university.mapper.dto.*;
 import com.eobrazovanje.university.repository.ExamRegistrationRepository;
 import com.eobrazovanje.university.repository.TeacherEngagementRepository;
 import com.eobrazovanje.university.repository.TeacherRepository;
 import com.eobrazovanje.university.service.interfaces.TeacherInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -119,6 +115,7 @@ public class TeacherService implements TeacherInterface {
         return new PagedResponse<ExamRegistrationDTO>(examRegistrationMapper.convertToDtos(pageExams), pageExams.getNumber(), pageExams.getSize(),
                 pageExams.getTotalElements(), pageExams.getTotalPages(), pageExams.isLast());
     }
+
 
 
 }

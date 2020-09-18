@@ -21,7 +21,7 @@ public class Transaction implements Serializable {
     private String purpose;
 
     @Column(name = "amount", nullable = false)
-    private Double amount;
+    private double amount;
 
     @Column(name = "date", nullable = false)
     private Date date;
@@ -56,11 +56,11 @@ public class Transaction implements Serializable {
         this.purpose = purpose;
     }
 
-    public Double getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

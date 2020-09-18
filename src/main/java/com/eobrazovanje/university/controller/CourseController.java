@@ -2,6 +2,7 @@ package com.eobrazovanje.university.controller;
 
 import com.eobrazovanje.university.config.AppConstants;
 import com.eobrazovanje.university.entity.Course;
+import com.eobrazovanje.university.entity.Course_enrollment;
 import com.eobrazovanje.university.mapper.CourseMapper;
 import com.eobrazovanje.university.mapper.dto.CourseDTO;
 import com.eobrazovanje.university.mapper.dto.PagedResponse;
@@ -79,5 +80,7 @@ public class CourseController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
+
 
 }

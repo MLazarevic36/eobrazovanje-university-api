@@ -11,9 +11,9 @@ public class CourseEnrollmentDTO implements Serializable {
 
     private Long course_enrollment_id;
     private CourseDTO course;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "student_id")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonBackReference(value = "student-enrollments")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "student_id")
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonBackReference(value = "student-enrollments")
     private StudentDTO student;
     private Boolean deleted;
 

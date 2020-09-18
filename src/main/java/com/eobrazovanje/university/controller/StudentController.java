@@ -7,6 +7,7 @@ import com.eobrazovanje.university.mapper.dto.*;
 import com.eobrazovanje.university.repository.UserRepository;
 import com.eobrazovanje.university.service.StudentService;
 import com.eobrazovanje.university.service.TermService;
+import com.eobrazovanje.university.service.UserService;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,9 @@ public class StudentController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private CourseEnrollmentMapper courseEnrollmentMapper;
@@ -96,6 +100,12 @@ public class StudentController {
         }
     }
 
+    @GetMapping(value = "/{id}/exam-registrations")
+    public PagedResponse<ExamRegistrationDTO> getStudentExamRegistrations(@PathVariable("id") Long id, @RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                                          @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
+        return studentService.getAllStudentExamsForUnregister(id, page, size);
+    }
+
     @GetMapping(value = "/{id}/terms")
     public ResponseEntity<Set<TermDTO>> getStudentTerms(@PathVariable("id") Long id){
 
@@ -127,9 +137,12 @@ public class StudentController {
     @PutMapping
     public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO) {
         Student student = studentMapper.convertToEntity(studentDTO);
+        User user = userMapper.convertToEntity(studentDTO.getUser());
         try {
             student.setStudent_id(studentDTO.getStudent_id());
-            student = studentService.save(student);
+            user.setId(studentDTO.getUser().getId());
+            userService.save(user);
+            studentService.save(student);
             return new ResponseEntity<>(studentMapper.convertToDto(student), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

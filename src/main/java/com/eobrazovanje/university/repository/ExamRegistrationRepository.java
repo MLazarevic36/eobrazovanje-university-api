@@ -22,7 +22,16 @@ public interface ExamRegistrationRepository extends JpaRepository<ExamRegistrati
     @Query(value = "SELECT * FROM exam_registrations WHERE deleted=0 AND status = 'ACTIVE'", nativeQuery = true)
     Set<ExamRegistration> findAllByDeletedSet();
 
+    @Query(value = "SELECT * FROM exam_registrations WHERE deleted=0 AND status = 'ACTIVE' AND student = :student_id", nativeQuery = true)
+    Set<ExamRegistration> findAllByStudentSet(@Param("student_id") Long student_id);
+
     @Query(value = "SELECT * FROM exam_registrations WHERE deleted=0 AND student = :student_id", nativeQuery = true)
     Page<ExamRegistration> findAllByStudentAndRegistered(@Param("student_id") Long student_id, Pageable pageable);
+
+    @Query(value = "SELECT * FROM exam_registrations WHERE deleted=0 AND student = :student_id AND status = 'ACTIVE'", nativeQuery = true)
+    Page<ExamRegistration> findAllByStudentForUnregister(@Param("student_id") Long student_id, Pageable pageable);
+
+    @Query(value = "SELECT * FROM exam_registrations WHERE deleted=0 AND student = :student_id AND status = 'PASSED'", nativeQuery = true)
+    Page<ExamRegistration> findAllByStudentAndPassed(@Param("student_id") Long student_id, Pageable pageable);
 
 }

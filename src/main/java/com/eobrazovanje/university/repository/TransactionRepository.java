@@ -14,6 +14,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     Transaction getByStudent(Long student_id);
 
+    @Query(value = "SELECT * FROM transactions WHERE deleted=0", nativeQuery = true)
+    Page<Transaction> findAllTransactions(Pageable pageable);
+
     @Query(value = "SELECT * FROM transactions WHERE student_id = :id", nativeQuery = true)
     Page<Transaction> findTransactionsByStudent(@Param("id") Long id, Pageable pageable);
 }

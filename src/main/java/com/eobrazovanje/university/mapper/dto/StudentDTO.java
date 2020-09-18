@@ -13,15 +13,15 @@ public class StudentDTO implements Serializable {
     private String last_name;
     private String index_number;
     private Double account_balance;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
+
     private UserDTO user;
-    @JsonManagedReference(value = "student-enrollments")
+
+    @JsonIgnore
     private Set<CourseEnrollmentDTO> enrollments = new HashSet<CourseEnrollmentDTO>();
     @JsonManagedReference(value = "student-documents")
     @JsonIgnore
     private Set<DocumentDTO> documents = new HashSet<DocumentDTO>();
-    @JsonManagedReference(value = "student-transactions")
+
     @JsonIgnore
     private Set<TransactionDTO> transactions = new HashSet<TransactionDTO>();
 //    @JsonManagedReference(value = "student-exam-registrations")

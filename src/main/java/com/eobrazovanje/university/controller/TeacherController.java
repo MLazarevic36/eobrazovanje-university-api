@@ -8,14 +8,11 @@ import com.eobrazovanje.university.mapper.UserMapper;
 import com.eobrazovanje.university.mapper.dto.*;
 import com.eobrazovanje.university.repository.UserRepository;
 import com.eobrazovanje.university.service.TeacherService;
+import com.eobrazovanje.university.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/teachers")
@@ -32,6 +29,9 @@ public class TeacherController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ExamRegistrationMapper examRegistrationMapper;
@@ -77,9 +77,12 @@ public class TeacherController {
     @PutMapping
     public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody TeacherDTO teacherDTO) {
         Teacher teacher = teacherMapper.convertToEntity(teacherDTO);
+        User user = userMapper.convertToEntity(teacherDTO.getUser());
         try {
             teacher.setTeacher_id(teacherDTO.getTeacher_id());
-            teacher = teacherService.save(teacher);
+            user.setId(teacherDTO.getUser().getId());
+            userService.save(user);
+            teacherService.save(teacher);
             return new ResponseEntity<>(teacherMapper.convertToDto(teacher), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,5 +13,12 @@ import org.springframework.stereotype.Repository;
 public interface CourseEnrollmentRepository extends JpaRepository<Course_enrollment, Long> {
 
     @Query(value = "SELECT * FROM course_enrollments WHERE deleted = 0 AND student_id = :student_id", nativeQuery = true)
-    Page<Course_enrollment> findAllByDeleted(@Param("student_id") Long student_id, Pageable pageable);
+    Page<Course_enrollment> findAllByDeletedByStudent(@Param("student_id") Long student_id, Pageable pageable);
+
+    @Query(value = "SELECT * FROM course_enrollments WHERE deleted = 0", nativeQuery = true)
+    Page<Course_enrollment> findAllByDeleted(Pageable pageable);
+
+    @Query(value = "SELECT * FROM course_enrollments WHERE deleted = 0 AND course_id = :course_id", nativeQuery = true)
+    Page<Course_enrollment> findAllByCourse(@Param("course_id") Long course_id, Pageable pageable);
+
 }

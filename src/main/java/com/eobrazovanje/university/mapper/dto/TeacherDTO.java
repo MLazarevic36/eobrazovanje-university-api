@@ -11,10 +11,8 @@ public class TeacherDTO implements Serializable {
     private Long teacher_id;
     private String first_name;
     private String last_name;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     private UserDTO user;
-    @JsonManagedReference
+    @JsonIgnore
     private Set<TeacherEngagementDTO> engagements = new HashSet<TeacherEngagementDTO>();
     private Boolean deleted;
 

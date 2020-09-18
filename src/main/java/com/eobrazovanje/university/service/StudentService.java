@@ -2,6 +2,7 @@ package com.eobrazovanje.university.service;
 
 import com.eobrazovanje.university.entity.*;
 import com.eobrazovanje.university.mapper.CourseEnrollmentMapper;
+import com.eobrazovanje.university.mapper.ExamRegistrationMapper;
 import com.eobrazovanje.university.mapper.StudentMapper;
 import com.eobrazovanje.university.mapper.TransactionMapper;
 import com.eobrazovanje.university.mapper.dto.*;
@@ -44,6 +45,9 @@ public class StudentService implements StudentInterface {
 
     @Autowired
     private TransactionMapper transactionMapper;
+
+    @Autowired
+    private ExamRegistrationMapper examRegistrationMapper;
 
     @Override
     public Student findOne(Long id) {
@@ -88,7 +92,7 @@ public class StudentService implements StudentInterface {
     public PagedResponse<CourseEnrollmentDTO> getAllStudentEnrollments(Long id, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "course_enrollment_id");
 
-        Page<Course_enrollment> enrollments = courseEnrollmentRepository.findAllByDeleted(id, pageable);
+        Page<Course_enrollment> enrollments = courseEnrollmentRepository.findAllByDeletedByStudent(id, pageable);
 
         if (enrollments.getNumberOfElements() == 0) {
             return new PagedResponse<CourseEnrollmentDTO>(Collections.emptySet(), enrollments.getNumber(), enrollments.getSize(),
@@ -97,6 +101,21 @@ public class StudentService implements StudentInterface {
 
         return new PagedResponse<CourseEnrollmentDTO>(courseEnrollmentMapper.convertToDtos(enrollments), enrollments.getNumber(), enrollments.getSize(),
                 enrollments.getTotalElements(), enrollments.getTotalPages(), enrollments.isLast());
+
+    }
+
+    public PagedResponse<ExamRegistrationDTO> getAllStudentExamsForUnregister(Long id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "exam_registration_id");
+
+        Page<ExamRegistration> registrations = examRegistrationRepository.findAllByStudentForUnregister(id, pageable);
+
+        if (registrations.getNumberOfElements() == 0) {
+            return new PagedResponse<ExamRegistrationDTO>(Collections.emptySet(), registrations.getNumber(), registrations.getSize(),
+                    registrations.getTotalElements(), registrations.getTotalPages(), registrations.isLast());
+        }
+
+        return new PagedResponse<ExamRegistrationDTO>(examRegistrationMapper.convertToDtos(registrations), registrations.getNumber(), registrations.getSize(),
+                registrations.getTotalElements(), registrations.getTotalPages(), registrations.isLast());
 
     }
 

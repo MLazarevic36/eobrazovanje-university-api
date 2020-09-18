@@ -1,7 +1,6 @@
 package com.eobrazovanje.university.mapper;
 
 import com.eobrazovanje.university.entity.Teacher;
-import com.eobrazovanje.university.entity.Teacher_engagement;
 import com.eobrazovanje.university.mapper.dto.TeacherDTO;
 import com.eobrazovanje.university.mapper.dto.TeacherEngagementDTO;
 import org.modelmapper.ModelMapper;
