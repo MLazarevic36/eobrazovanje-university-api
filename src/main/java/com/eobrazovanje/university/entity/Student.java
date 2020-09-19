@@ -1,5 +1,7 @@
 package com.eobrazovanje.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -31,15 +33,19 @@ public class Student implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonIgnore
     private Set<Course_enrollment> course_enrollments = new HashSet<>();
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonIgnore
     private Set<Document> documents = new HashSet<>();
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonIgnore
     private Set<Transaction> transactions = new HashSet<>();
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<ExamRegistration> exam_registrations = new HashSet<>();
 
     @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")

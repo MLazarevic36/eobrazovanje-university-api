@@ -8,18 +8,17 @@ public class DocumentDTO implements Serializable {
 
     private Long document_id;
     private String name;
-    private String uri;
-    @JsonBackReference(value = "student-documents")
+    private byte[] file;
     private StudentDTO student;
     private Boolean deleted;
 
     public DocumentDTO() {
     }
 
-    public DocumentDTO(Long document_id, String name, String uri, StudentDTO student, Boolean deleted) {
+    public DocumentDTO(Long document_id, String name, byte[] file, StudentDTO student, Boolean deleted) {
         this.document_id = document_id;
         this.name = name;
-        this.uri = uri;
+        this.file = file;
         this.student = student;
         this.deleted = deleted;
     }
@@ -40,12 +39,12 @@ public class DocumentDTO implements Serializable {
         this.name = name;
     }
 
-    public String getUri() {
-        return uri;
+    public byte[] getFile() {
+        return file;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setFile(byte[] file) {
+        this.file = file;
     }
 
     public StudentDTO getStudent() {

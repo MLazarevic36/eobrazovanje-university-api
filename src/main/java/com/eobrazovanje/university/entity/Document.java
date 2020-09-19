@@ -15,8 +15,9 @@ public class Document implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "uri", nullable = false)
-    private String uri;
+    @Column(name = "file", nullable = false)
+    @Lob
+    private byte[] file;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "student_id", nullable = false)
@@ -44,12 +45,12 @@ public class Document implements Serializable {
         this.name = name;
     }
 
-    public String getUri() {
-        return uri;
+    public byte[] getFile() {
+        return file;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setFile(byte[] file) {
+        this.file = file;
     }
 
     public Student getStudent() {

@@ -18,13 +18,18 @@ public class StudentDTO implements Serializable {
 
     @JsonIgnore
     private Set<CourseEnrollmentDTO> enrollments = new HashSet<CourseEnrollmentDTO>();
-    @JsonManagedReference(value = "student-documents")
+
+//    @JsonManagedReference(value = "student-documents")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "document_id", scope = DocumentDTO.class)
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonIgnore
     @JsonIgnore
     private Set<DocumentDTO> documents = new HashSet<DocumentDTO>();
 
     @JsonIgnore
     private Set<TransactionDTO> transactions = new HashSet<TransactionDTO>();
 //    @JsonManagedReference(value = "student-exam-registrations")
+    @JsonIgnore
     private Set<ExamRegistrationDTO> examRegistrations = new HashSet<ExamRegistrationDTO>();
     private Boolean deleted;
 
