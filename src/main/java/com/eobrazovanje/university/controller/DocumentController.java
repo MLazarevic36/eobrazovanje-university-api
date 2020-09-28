@@ -1,9 +1,12 @@
 package com.eobrazovanje.university.controller;
 
+import com.eobrazovanje.university.config.AppConstants;
 import com.eobrazovanje.university.entity.Document;
 import com.eobrazovanje.university.entity.Student;
 import com.eobrazovanje.university.mapper.DocumentMapper;
 import com.eobrazovanje.university.mapper.dto.DocumentDTO;
+import com.eobrazovanje.university.mapper.dto.ExamRegistrationDTO;
+import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.repository.StudentRepository;
 import com.eobrazovanje.university.security.CurrentUser;
 import com.eobrazovanje.university.security.UserPrincipal;
@@ -48,6 +51,13 @@ public class DocumentController {
             ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "/student/{id}")
+    public PagedResponse<DocumentDTO> getDocumentsByStudent(@RequestParam(value="page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                                            @RequestParam(value="size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size, @PathVariable("id") Long id) {
+
+        return documentService.getAllDocumentsByStudent(id, page, size);
     }
 
     @GetMapping(value = "/{id}")

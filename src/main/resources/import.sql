@@ -55,3 +55,4 @@ INSERT INTO exam_registrations VALUES (1, 0, FALSE, 0, 5, TRUE, 'ACTIVE', 1, 1);
 INSERT INTO exam_registrations VALUES (2, 22, FALSE, 30, 6, TRUE, 'PASSED', 4, 1);
 INSERT INTO exam_registrations VALUES (3, 0, FALSE, 0, 0, TRUE, 'ACTIVE', 4, 2);
 INSERT INTO exam_registrations VALUES (4, 30, FALSE, 51, 9, TRUE, 'PASSED', 2, 2);
+
