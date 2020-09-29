@@ -2,11 +2,13 @@ package com.eobrazovanje.university.service;
 
 import com.eobrazovanje.university.entity.Exam;
 import com.eobrazovanje.university.entity.ExamRegistration;
+import com.eobrazovanje.university.entity.Status;
 import com.eobrazovanje.university.entity.Term;
 import com.eobrazovanje.university.mapper.TermMapper;
 import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.mapper.dto.TermDTO;
 import com.eobrazovanje.university.repository.ExamRegistrationRepository;
+import com.eobrazovanje.university.repository.ExamRepository;
 import com.eobrazovanje.university.repository.TermRepository;
 import com.eobrazovanje.university.service.interfaces.TermInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,10 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-public class TermService implements TermInterface {
+public class    TermService implements TermInterface {
 
     @Autowired
     private TermRepository termRepository;
@@ -32,6 +35,9 @@ public class TermService implements TermInterface {
 
     @Autowired
     private TermMapper termMapper;
+
+    @Autowired
+    private ExamRepository examRepository;
 
     @Override
     public Term findOne(Long id) {
@@ -96,20 +102,32 @@ public class TermService implements TermInterface {
 
     public Set<Term> getAllTermsForStudentNotRegisteredExams(Long id) {
         Set<Term> terms = getAllTermsForStudent(id);
+
         Set<ExamRegistration> registrations = examRegistrationRepository.findAllByStudentSet(id);
-        for(Term t: terms) {
-            Set<Exam> exams = t.getExams();
-            Iterator<Exam> iter = exams.iterator();
-            while (iter.hasNext()) {
-                Exam exam = iter.next();
-                    for (ExamRegistration e : registrations) {
-                        if (exam.getExam_id() == e.getExam().getExam_id() && String.valueOf(e.getStatus()).equals("ACTIVE")) {
-                            iter.remove();
-                        }
-                    }
-                t.setExams(exams);
+        List<Long> coursesToRemove = new ArrayList<>();
+        List<Long> examsToRemove = new ArrayList<>();
+
+        for (ExamRegistration er: registrations){
+            if(er.getStatus().name().equals("PASSED")){
+                Long courseId = er.getExam().getCourse().getCourse_id();
+                Set<Exam> exams = examRepository.findAllByCourseId(courseId);
+                coursesToRemove.addAll(exams.stream().map(ex -> ex.getCourse().getCourse_id()).collect(Collectors.toSet()));
+            } else if(er.getStatus().name().equals("ACTIVE")){
+                examsToRemove.add(er.getExam().getExam_id());
             }
         }
+
+        for (Term term: terms) {
+            Set<Exam> filteredExams = new HashSet<>();
+            for (Exam exam : term.getExams()) {
+                if((!coursesToRemove.contains(exam.getCourse().getCourse_id()))
+                        && (!examsToRemove.contains(exam.getExam_id()))){
+                    filteredExams.add(exam);
+                }
+            }
+            term.setExams(filteredExams);
+        }
+
         return terms;
     }
 
