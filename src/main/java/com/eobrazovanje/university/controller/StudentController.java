@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "api/students")
@@ -110,8 +110,8 @@ public class StudentController {
     public ResponseEntity<Set<TermDTO>> getStudentTerms(@PathVariable("id") Long id){
 
         try {
-            Set<Term> terms = termService.getAllTermsForStudentNotRegisteredExams(id);
-            return new ResponseEntity<>(termMapper.convertToDtosSet(terms), HttpStatus.OK);
+            List<Term> terms = termService.getAllTermsForStudentNotRegisteredExams(id);
+            return new ResponseEntity<>(termMapper.convertToDtosList(terms), HttpStatus.OK);
 
         }catch (Exception ex) {
             ex.printStackTrace();
@@ -139,7 +139,7 @@ public class StudentController {
         Student student = studentMapper.convertToEntity(studentDTO);
         User user = userMapper.convertToEntity(studentDTO.getUser());
         try {
-            student.setStudent_id(studentDTO.getStudent_id());
+            student.setId(studentDTO.getId());
             user.setId(studentDTO.getUser().getId());
             userService.save(user);
             studentService.save(student);

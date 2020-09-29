@@ -1,5 +1,7 @@
 package com.eobrazovanje.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -14,7 +16,7 @@ public class Exam implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exam_id", unique = true, nullable = false)
-    private Long exam_id;
+    private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "course_id", nullable = false)
@@ -35,6 +37,7 @@ public class Exam implements Serializable {
     private Term term;
 
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonIgnore
     private Set<ExamRegistration> examRegistrations = new HashSet<>();
 
     @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
@@ -43,12 +46,12 @@ public class Exam implements Serializable {
     public Exam() {
     }
 
-    public Long getExam_id() {
-        return exam_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setExam_id(Long exam_id) {
-        this.exam_id = exam_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Course getCourse() {

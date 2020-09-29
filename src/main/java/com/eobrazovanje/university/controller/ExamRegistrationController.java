@@ -5,22 +5,16 @@ import com.eobrazovanje.university.entity.*;
 import com.eobrazovanje.university.mapper.ExamMapper;
 import com.eobrazovanje.university.mapper.ExamRegistrationMapper;
 import com.eobrazovanje.university.mapper.StudentMapper;
-import com.eobrazovanje.university.mapper.TermMapper;
-import com.eobrazovanje.university.mapper.dto.ExamDTO;
 import com.eobrazovanje.university.mapper.dto.ExamRegistrationDTO;
 import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.repository.ExamRepository;
 import com.eobrazovanje.university.repository.StudentRepository;
-import com.eobrazovanje.university.repository.TermRepository;
 import com.eobrazovanje.university.service.ExamRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/exam-registrations")
@@ -78,7 +72,7 @@ public class ExamRegistrationController {
 
     @PostMapping
     public ResponseEntity<ExamRegistrationDTO> addExamRegistration(@RequestBody ExamRegistrationDTO examRegistrationDTO) {
-        Exam exam = examRepository.getOne(examRegistrationDTO.getExam().getExam_id());
+        Exam exam = examRepository.getOne(examRegistrationDTO.getExam().getId());
         examRegistrationDTO.setExam(examMapper.convertToDto(exam));
         ExamRegistration examRegistration = examRegistrationMapper.convertToEntity(examRegistrationDTO);
         try {
@@ -95,7 +89,7 @@ public class ExamRegistrationController {
     public ResponseEntity<ExamRegistrationDTO> updateExamRegistration(@RequestBody ExamRegistrationDTO examRegistrationDTO) {
         ExamRegistration examRegistration = examRegistrationMapper.convertToEntity(examRegistrationDTO);
         try {
-            examRegistration.setExam_registration_id(examRegistrationDTO.getExam_registration_id());
+            examRegistration.setId(examRegistrationDTO.getId());
             examRegistration = examRegistrationService.update(examRegistration);
             return new ResponseEntity<>(examRegistrationMapper.convertToDto(examRegistration), HttpStatus.OK);
         } catch (Exception e) {

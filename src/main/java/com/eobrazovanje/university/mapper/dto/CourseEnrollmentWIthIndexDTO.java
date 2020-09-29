@@ -2,13 +2,13 @@ package com.eobrazovanje.university.mapper.dto;
 
 public class CourseEnrollmentWIthIndexDTO {
 
-    private Long course_enrollment_id;
+    private Long id;
     private CourseDTO course;
     private String index_number;
     private Boolean deleted;
 
-    public CourseEnrollmentWIthIndexDTO(Long course_enrollment_id, CourseDTO course, String index_number, Boolean deleted) {
-        this.course_enrollment_id = course_enrollment_id;
+    public CourseEnrollmentWIthIndexDTO(Long id, CourseDTO course, String index_number, Boolean deleted) {
+        this.id = id;
         this.course = course;
         this.index_number = index_number;
         this.deleted = deleted;
@@ -17,12 +17,12 @@ public class CourseEnrollmentWIthIndexDTO {
     public CourseEnrollmentWIthIndexDTO() {
     }
 
-    public Long getCourse_enrollment_id() {
-        return course_enrollment_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setCourse_enrollment_id(Long course_enrollment_id) {
-        this.course_enrollment_id = course_enrollment_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public CourseDTO getCourse() {

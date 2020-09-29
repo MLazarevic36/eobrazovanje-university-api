@@ -1,20 +1,13 @@
 package com.eobrazovanje.university.mapper.dto;
 
 import com.eobrazovanje.university.entity.Teacher_role;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.io.Serializable;
 
 public class TeacherEngagementDTO implements Serializable {
 
-    private Long teacher_engagement_id;
+    private Long id;
     private CourseDTO course;
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "teacher_id")
-//    @JsonIdentityReference(alwaysAsId = true)
-//    @JsonBackReference
     private TeacherDTO teacher;
     private Teacher_role teacher_role;
     private Boolean deleted;
@@ -22,21 +15,21 @@ public class TeacherEngagementDTO implements Serializable {
     public TeacherEngagementDTO() {
     }
 
-    public TeacherEngagementDTO(Long teacher_engagement_id, CourseDTO course, TeacherDTO teacher,
+    public TeacherEngagementDTO(Long id, CourseDTO course, TeacherDTO teacher,
                                 Teacher_role teacher_role, Boolean deleted) {
-        this.teacher_engagement_id = teacher_engagement_id;
+        this.id = id;
         this.course = course;
         this.teacher = teacher;
         this.teacher_role = teacher_role;
         this.deleted = deleted;
     }
 
-    public Long getTeacher_engagement_id() {
-        return teacher_engagement_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setTeacher_engagement_id(Long teacher_engagement_id) {
-        this.teacher_engagement_id = teacher_engagement_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public CourseDTO getCourse() {

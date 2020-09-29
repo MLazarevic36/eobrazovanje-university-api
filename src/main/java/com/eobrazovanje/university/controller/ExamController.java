@@ -5,11 +5,8 @@ import com.eobrazovanje.university.entity.Exam;
 import com.eobrazovanje.university.mapper.ExamMapper;
 import com.eobrazovanje.university.mapper.dto.ExamDTO;
 import com.eobrazovanje.university.mapper.dto.PagedResponse;
-import com.eobrazovanje.university.mapper.dto.UserDTO;
 import com.eobrazovanje.university.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +58,7 @@ public class ExamController {
     public ResponseEntity<ExamDTO> updateExam(@RequestBody ExamDTO examDTO) {
         Exam exam = examMapper.convertToEntity(examDTO);
         try {
-            exam.setExam_id(examDTO.getExam_id());
+            exam.setId(examDTO.getId());
             exam = examService.save(exam);
             return new ResponseEntity<>(examMapper.convertToDto(exam), HttpStatus.OK);
         } catch (Exception e) {

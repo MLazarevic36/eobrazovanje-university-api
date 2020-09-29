@@ -1,48 +1,27 @@
 package com.eobrazovanje.university.mapper.dto;
 
 import com.eobrazovanje.university.entity.Status;
-import com.eobrazovanje.university.entity.Student;
-import com.eobrazovanje.university.mapper.StudentMapper;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.modelmapper.PropertyMap;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 
 public class ExamRegistrationDTO implements Serializable {
 
-    private Long exam_registration_id;
+    private Long id;
     private int colloquium_points;
     private int exam_points;
     private int grade;
     private Status status;
-//
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "exam_id",
-//            scope = ExamDTO.class)
-//    @JsonIdentityReference(alwaysAsId = true)
-//    @JsonBackReference(value = "exams-exam-registrations")
     private ExamDTO exam;
-
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "student_id",
-//            scope = StudentDTO.class)
-//    @JsonIdentityReference(alwaysAsId = true)
-//    @JsonBackReference(value = "student-exam-registrations")
     private StudentDTO student;
-
-//    private StudentInfo studentInfo;
-
     private Boolean registered;
     private Boolean deleted;
 
     public ExamRegistrationDTO() {
     }
 
-    public ExamRegistrationDTO(Long exam_registration_id, int colloquium_points, int exam_points, int grade, Status status,
+    public ExamRegistrationDTO(Long id, int colloquium_points, int exam_points, int grade, Status status,
                                ExamDTO exam, StudentDTO student, Boolean registered, Boolean deleted) {
-        this.exam_registration_id = exam_registration_id;
+        this.id = id;
         this.colloquium_points = colloquium_points;
         this.exam_points = exam_points;
         this.grade = grade;
@@ -53,12 +32,12 @@ public class ExamRegistrationDTO implements Serializable {
         this.deleted = deleted;
     }
 
-    public Long getExam_registration_id() {
-        return exam_registration_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setExam_registration_id(Long exam_registration_id) {
-        this.exam_registration_id = exam_registration_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getColloquium_points() {

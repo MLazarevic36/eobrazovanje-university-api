@@ -8,17 +8,12 @@ import com.eobrazovanje.university.mapper.StudentMapper;
 import com.eobrazovanje.university.mapper.dto.CourseEnrollmentDTO;
 import com.eobrazovanje.university.mapper.dto.CourseEnrollmentWIthIndexDTO;
 import com.eobrazovanje.university.mapper.dto.PagedResponse;
-import com.eobrazovanje.university.mapper.dto.StudentDTO;
 import com.eobrazovanje.university.repository.StudentRepository;
 import com.eobrazovanje.university.service.CourseEnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/course-enrollments")
@@ -78,7 +73,7 @@ public class CourseEnrollmentController {
     public ResponseEntity<CourseEnrollmentDTO> addCourseEnrollment(@RequestBody CourseEnrollmentWIthIndexDTO courseEnrollmentWIthIndexDTO) {
         Student student = studentRepository.findStudentByIndex(courseEnrollmentWIthIndexDTO.getIndex_number());
         CourseEnrollmentDTO enrollmentDTO = new CourseEnrollmentDTO();
-        enrollmentDTO.setCourse_enrollment_id(courseEnrollmentWIthIndexDTO.getCourse_enrollment_id());
+        enrollmentDTO.setId(courseEnrollmentWIthIndexDTO.getId());
         enrollmentDTO.setCourse(courseEnrollmentWIthIndexDTO.getCourse());
         enrollmentDTO.setStudent(studentMapper.convertToDto(student));
         enrollmentDTO.setDeleted(courseEnrollmentWIthIndexDTO.getDeleted());
@@ -98,7 +93,7 @@ public class CourseEnrollmentController {
     public ResponseEntity<CourseEnrollmentDTO> updateCourseEnrollment(@RequestBody CourseEnrollmentDTO courseEnrollmentDTO) {
         Course_enrollment course_enrollment = courseEnrollmentMapper.convertToEntity(courseEnrollmentDTO);
         try {
-            course_enrollment.setCourse_enrollment_id(courseEnrollmentDTO.getCourse_enrollment_id());
+            course_enrollment.setId(courseEnrollmentDTO.getId());
             course_enrollment = courseEnrollmentService.save(course_enrollment);
             return new ResponseEntity<>(courseEnrollmentMapper.convertToDto(course_enrollment), HttpStatus.OK);
         } catch (Exception e) {

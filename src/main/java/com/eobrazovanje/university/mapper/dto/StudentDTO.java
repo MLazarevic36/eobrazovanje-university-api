@@ -8,27 +8,18 @@ import java.util.Set;
 
 public class StudentDTO implements Serializable {
 
-    private Long student_id;
+    private Long id;
     private String first_name;
     private String last_name;
     private String index_number;
     private Double account_balance;
-
     private UserDTO user;
-
     @JsonIgnore
     private Set<CourseEnrollmentDTO> enrollments = new HashSet<CourseEnrollmentDTO>();
-
-//    @JsonManagedReference(value = "student-documents")
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "document_id", scope = DocumentDTO.class)
-//    @JsonIdentityReference(alwaysAsId = true)
-//    @JsonIgnore
     @JsonIgnore
     private Set<DocumentDTO> documents = new HashSet<DocumentDTO>();
-
     @JsonIgnore
     private Set<TransactionDTO> transactions = new HashSet<TransactionDTO>();
-//    @JsonManagedReference(value = "student-exam-registrations")
     @JsonIgnore
     private Set<ExamRegistrationDTO> examRegistrations = new HashSet<ExamRegistrationDTO>();
     private Boolean deleted;
@@ -36,10 +27,10 @@ public class StudentDTO implements Serializable {
     public StudentDTO() {
     }
 
-    public StudentDTO(Long student_id, String first_name, String last_name, String index_number, Double account_balance,
+    public StudentDTO(Long id, String first_name, String last_name, String index_number, Double account_balance,
                       UserDTO user, Set<CourseEnrollmentDTO> enrollments, Set<DocumentDTO> documents,
                       Set<TransactionDTO> transactions, Set<ExamRegistrationDTO> examRegistrations, Boolean deleted) {
-        this.student_id = student_id;
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.index_number = index_number;
@@ -52,12 +43,12 @@ public class StudentDTO implements Serializable {
         this.deleted = deleted;
     }
 
-    public Long getStudent_id() {
-        return student_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setStudent_id(Long student_id) {
-        this.student_id = student_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setExamRegistrations(Set<ExamRegistrationDTO> examRegistrations) {

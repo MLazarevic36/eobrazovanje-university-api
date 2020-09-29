@@ -99,7 +99,7 @@ public class TeacherService implements TeacherInterface {
         Set<ExamRegistration> all_exams = examRegistrationRepository.findAllByDeletedSet();
         Teacher_engagement t = teacherEngagementRepository.getOne(id);
         for(ExamRegistration e : all_exams) {
-            if(e.getExam().getCourse().getCourse_id() == t.getCourse().getCourse_id()) {
+            if(e.getExam().getCourse().getId() == t.getCourse().getId()) {
                 exams.add(e);
             }
         }

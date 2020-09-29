@@ -5,7 +5,6 @@ import com.eobrazovanje.university.entity.Document;
 import com.eobrazovanje.university.entity.Student;
 import com.eobrazovanje.university.mapper.DocumentMapper;
 import com.eobrazovanje.university.mapper.dto.DocumentDTO;
-import com.eobrazovanje.university.mapper.dto.ExamRegistrationDTO;
 import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.repository.StudentRepository;
 import com.eobrazovanje.university.security.CurrentUser;
@@ -23,7 +22,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.Set;
@@ -123,7 +121,7 @@ public class DocumentController {
     public ResponseEntity<DocumentDTO> updateDocument(@RequestBody DocumentDTO documentDTO) {
         Document document = documentMapper.convertToEntity(documentDTO);
         try {
-            document.setDocument_id(documentDTO.getDocument_id());
+            document.setId(documentDTO.getId());
             document = documentService.save(document);
             return new ResponseEntity<>(documentMapper.convertToDto(document), HttpStatus.OK);
         } catch (Exception e) {

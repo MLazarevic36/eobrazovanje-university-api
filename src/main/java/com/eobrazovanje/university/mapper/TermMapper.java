@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class TermMapper {
         return termPage.stream().map(this::convertToDto).collect(Collectors.toSet());
     }
 
-    public Set<TermDTO> convertToDtosSet(Set<Term> terms) {
+    public Set<TermDTO> convertToDtosList(List<Term> terms) {
         return terms.stream().map(this::convertToDto).collect(Collectors.toSet());
     }
 

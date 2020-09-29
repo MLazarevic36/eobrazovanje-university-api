@@ -90,7 +90,7 @@ public class StudentService implements StudentInterface {
     }
 
     public PagedResponse<CourseEnrollmentDTO> getAllStudentEnrollments(Long id, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "course_enrollment_id");
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "student_id");
 
         Page<Course_enrollment> enrollments = courseEnrollmentRepository.findAllByDeletedByStudent(id, pageable);
 
@@ -127,12 +127,12 @@ public class StudentService implements StudentInterface {
 
     public Set<Exam> getStudentExams(Long id) {
         Set<Exam> exams = new HashSet<>();
-        Set<Exam> all_exams = examRepository.findAllByDeletedSet();
+        Set<Exam> all_exams = examRepository.findByDeletedFalse();
         Student student = studentRepository.getOne(id);
 
         for(Course_enrollment c : student.getCourse_enrollments()) {
             for(Exam e: all_exams) {
-                if(c.getCourse().getCourse_id() == e.getCourse().getCourse_id()) {
+                if(c.getCourse().getId() == e.getCourse().getId()) {
                     exams.add(e);
                 }
             }
@@ -147,7 +147,7 @@ public class StudentService implements StudentInterface {
         Student student = studentRepository.getOne(id);
         for(ExamRegistration examRegistration : student.getExam_registrations()) {
             for(ExamRegistration e: all_registrations) {
-                if(examRegistration.getStudent().getStudent_id() == e.getStudent().getStudent_id()) {
+                if(examRegistration.getStudent().getId() == e.getStudent().getId()) {
                     registrations.add(e);
                 }
             }
@@ -160,7 +160,7 @@ public class StudentService implements StudentInterface {
     }
 
     public PagedResponse<TransactionDTO> getAllStudentTransactions(Long id, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "transaction_id");
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "student_id");
 
         Page<Transaction> transactions = transactionRepository.findTransactionsByStudent(id, pageable);
 

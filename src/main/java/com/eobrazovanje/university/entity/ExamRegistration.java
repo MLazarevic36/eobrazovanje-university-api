@@ -10,7 +10,7 @@ public class ExamRegistration implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exam_registration_id", unique = true, nullable = false)
-    private Long exam_registration_id;
+    private Long id;
 
     @Column(name = "colloquium_points")
     private int colloquium_points;
@@ -42,12 +42,12 @@ public class ExamRegistration implements Serializable {
     public ExamRegistration() {
     }
 
-    public Long getExam_registration_id() {
-        return exam_registration_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setExam_registration_id(Long exam_registration_id) {
-        this.exam_registration_id = exam_registration_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getGrade() {

@@ -10,12 +10,10 @@ import java.util.Set;
 
 public class TermDTO implements Serializable {
 
-    private Long term_id;
+    private Long id;
     private TermName term_name;
     private Date start_date;
     private Date end_date;
-
-    @JsonManagedReference(value="term-exams")
     private Set<ExamDTO> exams = new HashSet<ExamDTO>();
 
     private Boolean deleted;
@@ -23,9 +21,9 @@ public class TermDTO implements Serializable {
     public TermDTO() {
     }
 
-    public TermDTO(Long term_id, TermName term_name, Date start_date, Date end_date, Set<ExamDTO> exams,
+    public TermDTO(Long id, TermName term_name, Date start_date, Date end_date, Set<ExamDTO> exams,
                    Boolean deleted) {
-        this.term_id = term_id;
+        this.id = id;
         this.term_name = term_name;
         this.start_date = start_date;
         this.end_date = end_date;
@@ -33,12 +31,12 @@ public class TermDTO implements Serializable {
         this.deleted = deleted;
     }
 
-    public Long getTerm_id() {
-        return term_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setTerm_id(Long term_id) {
-        this.term_id = term_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public TermName getTerm_name() {

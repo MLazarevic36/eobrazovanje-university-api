@@ -1,5 +1,7 @@
 package com.eobrazovanje.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -12,7 +14,7 @@ public class Teacher implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teacher_id", unique = true, nullable = false)
-    private Long teacher_id;
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     private String first_name;
@@ -25,6 +27,7 @@ public class Teacher implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Teacher_engagement> engagements = new HashSet<>();
 
     @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
@@ -34,12 +37,12 @@ public class Teacher implements Serializable {
     public Teacher() {
     }
 
-    public Long getTeacher_id() {
-        return teacher_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setTeacher_id(Long teacher_id) {
-        this.teacher_id = teacher_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirst_name() {

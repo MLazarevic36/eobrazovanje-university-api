@@ -9,9 +9,8 @@ import java.util.Set;
 
 public class CourseDTO implements Serializable {
 
-    private Long course_id;
+    private Long id;
     private String name;
-    @JsonManagedReference
     @JsonIgnore
     private Set<TeacherEngagementDTO> engagements = new HashSet<TeacherEngagementDTO>();
     private Boolean deleted;
@@ -19,19 +18,19 @@ public class CourseDTO implements Serializable {
     public CourseDTO() {
     }
 
-    public CourseDTO(Long course_id, String name, Set<TeacherEngagementDTO> engagements, Boolean deleted) {
-        this.course_id = course_id;
+    public CourseDTO(Long id, String name, Set<TeacherEngagementDTO> engagements, Boolean deleted) {
+        this.id = id;
         this.name = name;
         this.engagements = engagements;
         this.deleted = deleted;
     }
 
-    public Long getCourse_id() {
-        return course_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setCourse_id(Long course_id) {
-        this.course_id = course_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

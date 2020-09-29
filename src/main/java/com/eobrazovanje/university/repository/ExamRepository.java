@@ -15,9 +15,8 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
     @Query(value = "SELECT * FROM exams WHERE deleted=0", nativeQuery = true)
     Page<Exam> findAllByDeleted(Pageable pageable);
 
-    @Query(value = "SELECT * FROM exams WHERE deleted=0", nativeQuery = true)
-    Set<Exam> findAllByDeletedSet();
+    Set<Exam> findByDeletedFalse();
 
-    @Query(value = "SELECT * FROM exams WHERE deleted=0 AND course_id = :courseId ", nativeQuery = true)
-    Set<Exam> findAllByCourseId(Long courseId);
+//    @Query(value = "SELECT * FROM exams WHERE deleted=0 AND course_id = :courseId ", nativeQuery = true)
+    Set<Exam> findByDeletedFalseAndCourse_Id(Long courseId);
 }

@@ -64,7 +64,7 @@ public class TermController {
     public ResponseEntity<TermDTO> updateTerm(@RequestBody TermDTO termDTO) {
         Term term = termMapper.convertToEntity(termDTO);
         try {
-            term.setTerm_id(termDTO.getTerm_id());
+            term.setId(termDTO.getId());
             term = termService.save(term);
             return new ResponseEntity<>(termMapper.convertToDto(term), HttpStatus.OK);
         } catch (Exception e) {

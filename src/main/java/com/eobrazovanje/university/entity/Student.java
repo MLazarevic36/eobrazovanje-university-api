@@ -14,7 +14,7 @@ public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id", unique = true, nullable = false)
-    private Long student_id;
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     private String first_name;
@@ -54,12 +54,12 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Long getStudent_id() {
-        return student_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setStudent_id(Long student_id) {
-        this.student_id = student_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirst_name() {

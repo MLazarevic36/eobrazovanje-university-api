@@ -2,19 +2,14 @@ package com.eobrazovanje.university.controller;
 
 import com.eobrazovanje.university.config.AppConstants;
 import com.eobrazovanje.university.entity.Course;
-import com.eobrazovanje.university.entity.Course_enrollment;
 import com.eobrazovanje.university.mapper.CourseMapper;
 import com.eobrazovanje.university.mapper.dto.CourseDTO;
 import com.eobrazovanje.university.mapper.dto.PagedResponse;
 import com.eobrazovanje.university.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/courses")
@@ -60,7 +55,7 @@ public class CourseController {
     public ResponseEntity<CourseDTO> updateCourse(@RequestBody CourseDTO courseDTO) {
         Course course = courseMapper.convertToEntity(courseDTO);
         try {
-            course.setCourse_id(courseDTO.getCourse_id());
+            course.setId(courseDTO.getId());
             course = courseService.save(course);
             return new ResponseEntity<>(courseMapper.convertToDto(course), HttpStatus.OK);
         } catch (Exception e) {

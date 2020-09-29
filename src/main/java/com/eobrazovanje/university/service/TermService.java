@@ -80,16 +80,16 @@ public class    TermService implements TermInterface {
 
     }
 
-    public Set<Term> getAllTermsForStudent(Long id) {
+    public List<Term> getAllTermsForStudent(Long id) {
 
         List<Term> terms = termRepository.findAllByDeletedOrdered();
-        Set<Term> set_terms = new HashSet<Term>(terms);
+//        Set<Term> set_terms = new HashSet<Term>(terms);
         Set<Exam> exams = studentService.getStudentExams(id);
 
-        for(Term t: set_terms) {
+        for(Term t: terms) {
             Set<Exam> new_exams = new HashSet<>();
             for(Exam e: exams) {
-                if(t.getTerm_id().equals(e.getTerm().getTerm_id())) {
+                if(t.getId().equals(e.getTerm().getId())) {
                     new_exams.add(e);
                 }
             }
@@ -97,11 +97,11 @@ public class    TermService implements TermInterface {
 
         }
 
-        return set_terms;
+        return terms;
     }
 
-    public Set<Term> getAllTermsForStudentNotRegisteredExams(Long id) {
-        Set<Term> terms = getAllTermsForStudent(id);
+    public List<Term> getAllTermsForStudentNotRegisteredExams(Long id) {
+        List<Term> terms = getAllTermsForStudent(id);
 
         Set<ExamRegistration> registrations = examRegistrationRepository.findAllByStudentSet(id);
         List<Long> coursesToRemove = new ArrayList<>();
@@ -109,25 +109,26 @@ public class    TermService implements TermInterface {
 
         for (ExamRegistration er: registrations){
             if(er.getStatus().name().equals("PASSED")){
-                Long courseId = er.getExam().getCourse().getCourse_id();
-                Set<Exam> exams = examRepository.findAllByCourseId(courseId);
-                coursesToRemove.addAll(exams.stream().map(ex -> ex.getCourse().getCourse_id()).collect(Collectors.toSet()));
+                Long courseId = er.getExam().getCourse().getId();
+                Set<Exam> exams = examRepository.findByDeletedFalseAndCourse_Id(courseId);
+                coursesToRemove.addAll(exams.stream().map(ex -> ex.getCourse().getId()).collect(Collectors.toSet()));
             } else if(er.getStatus().name().equals("ACTIVE")){
-                examsToRemove.add(er.getExam().getExam_id());
+                examsToRemove.add(er.getExam().getId());
             }
         }
 
         for (Term term: terms) {
             Set<Exam> filteredExams = new HashSet<>();
             for (Exam exam : term.getExams()) {
-                if((!coursesToRemove.contains(exam.getCourse().getCourse_id()))
-                        && (!examsToRemove.contains(exam.getExam_id()))){
+                if((!coursesToRemove.contains(exam.getCourse().getId()))
+                        && (!examsToRemove.contains(exam.getId()))){
                     filteredExams.add(exam);
                 }
             }
             term.setExams(filteredExams);
         }
 
+        terms.sort(Comparator.comparing(Term::getId));
         return terms;
     }
 

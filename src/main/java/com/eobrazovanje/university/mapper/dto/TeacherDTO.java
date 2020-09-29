@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class TeacherDTO implements Serializable {
 
-    private Long teacher_id;
+    private Long id;
     private String first_name;
     private String last_name;
     private UserDTO user;
@@ -19,9 +19,9 @@ public class TeacherDTO implements Serializable {
     public TeacherDTO() {
     }
 
-    public TeacherDTO(Long teacher_id, String first_name, String last_name, UserDTO user, Set<TeacherEngagementDTO> engagements,
+    public TeacherDTO(Long id, String first_name, String last_name, UserDTO user, Set<TeacherEngagementDTO> engagements,
                       Boolean deleted) {
-        this.teacher_id = teacher_id;
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.user = user;
@@ -29,12 +29,12 @@ public class TeacherDTO implements Serializable {
         this.deleted = deleted;
     }
 
-    public Long getTeacher_id() {
-        return teacher_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setTeacher_id(Long teacher_id) {
-        this.teacher_id = teacher_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirst_name() {

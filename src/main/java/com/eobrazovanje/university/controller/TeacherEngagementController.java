@@ -73,7 +73,7 @@ public class TeacherEngagementController {
     public ResponseEntity<TeacherEngagementDTO> updateTeacherEngagement(@RequestBody TeacherEngagementDTO teacherEngagementDTO) {
         Teacher_engagement teacher_engagement = teacherEngagementMapper.convertToEntity(teacherEngagementDTO);
         try {
-            teacher_engagement.setTeacher_engagement_id(teacherEngagementDTO.getTeacher_engagement_id());
+            teacher_engagement.setId(teacherEngagementDTO.getId());
             teacher_engagement = teacherEngagementService.save(teacher_engagement);
             return new ResponseEntity<>(teacherEngagementMapper.convertToDto(teacher_engagement), HttpStatus.OK);
         } catch (Exception e) {

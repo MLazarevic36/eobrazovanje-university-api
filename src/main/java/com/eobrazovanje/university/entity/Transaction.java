@@ -11,7 +11,7 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id", unique = true, nullable = false)
-    private Long transaction_id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "student_id", nullable = false)
@@ -32,12 +32,12 @@ public class Transaction implements Serializable {
     public Transaction() {
     }
 
-    public Long getTransaction_id() {
-        return transaction_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setTransaction_id(Long transaction_id) {
-        this.transaction_id = transaction_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Student getStudent() {

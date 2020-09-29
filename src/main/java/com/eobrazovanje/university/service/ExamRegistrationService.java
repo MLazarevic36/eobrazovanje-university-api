@@ -141,7 +141,7 @@ public class ExamRegistrationService implements ExamRegistrationInterface {
         transaction.setDeleted(false);
         transaction.setPurpose("Exam registration");
         transactionService.save(transaction);
-        Student student = studentRepository.getOne(examRegistration.getStudent().getStudent_id());
+        Student student = studentRepository.getOne(examRegistration.getStudent().getId());
         student.setAccount_balance(student.getAccount_balance() - examRegistration.getExam().getPrice());
         studentService.update(student);
     }
@@ -154,7 +154,7 @@ public class ExamRegistrationService implements ExamRegistrationInterface {
         transaction.setDeleted(false);
         transaction.setPurpose("Exam unregistration");
         transactionService.save(transaction);
-        Student student = studentRepository.getOne(examRegistration.getStudent().getStudent_id());
+        Student student = studentRepository.getOne(examRegistration.getStudent().getId());
         student.setAccount_balance(student.getAccount_balance() + examRegistration.getExam().getPrice());
         studentService.update(student);
     }

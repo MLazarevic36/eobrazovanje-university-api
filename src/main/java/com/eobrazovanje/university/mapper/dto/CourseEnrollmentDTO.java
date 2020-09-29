@@ -1,38 +1,30 @@
 package com.eobrazovanje.university.mapper.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import java.io.Serializable;
 
 public class CourseEnrollmentDTO implements Serializable {
 
-    private Long course_enrollment_id;
+    private Long id;
     private CourseDTO course;
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "student_id")
-//    @JsonIdentityReference(alwaysAsId = true)
-//    @JsonBackReference(value = "student-enrollments")
     private StudentDTO student;
     private Boolean deleted;
 
     public CourseEnrollmentDTO() {
     }
 
-    public CourseEnrollmentDTO(Long course_enrollment_id, CourseDTO course, StudentDTO student, Boolean deleted) {
-        this.course_enrollment_id = course_enrollment_id;
+    public CourseEnrollmentDTO(Long id, CourseDTO course, StudentDTO student, Boolean deleted) {
+        this.id = id;
         this.course = course;
         this.student = student;
         this.deleted = deleted;
     }
 
-    public Long getCourse_enrollment_id() {
-        return course_enrollment_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setCourse_enrollment_id(Long course_enrollment_id) {
-        this.course_enrollment_id = course_enrollment_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Boolean getDeleted() {

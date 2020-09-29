@@ -10,7 +10,7 @@ public class Teacher_engagement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teacher_engagement_id", unique = true, nullable = false)
-    private Long teacher_engagement_id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "course_id", nullable = false)
@@ -30,12 +30,12 @@ public class Teacher_engagement implements Serializable {
     public Teacher_engagement() {
     }
 
-    public Long getTeacher_engagement_id() {
-        return teacher_engagement_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setTeacher_engagement_id(Long teacher_engagement_id) {
-        this.teacher_engagement_id = teacher_engagement_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Course getCourse() {

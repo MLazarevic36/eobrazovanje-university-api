@@ -13,7 +13,7 @@ public class Term implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "term_id", unique = true, nullable = false)
-    private Long term_id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "term_name", nullable = false)
@@ -36,12 +36,12 @@ public class Term implements Serializable {
     public Term() {
     }
 
-    public Long getTerm_id() {
-        return term_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setTerm_id(Long term_id) {
-        this.term_id = term_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public TermName getTerm_name() {

@@ -79,7 +79,7 @@ public class TeacherController {
         Teacher teacher = teacherMapper.convertToEntity(teacherDTO);
         User user = userMapper.convertToEntity(teacherDTO.getUser());
         try {
-            teacher.setTeacher_id(teacherDTO.getTeacher_id());
+            teacher.setId(teacherDTO.getId());
             user.setId(teacherDTO.getUser().getId());
             userService.save(user);
             teacherService.save(teacher);

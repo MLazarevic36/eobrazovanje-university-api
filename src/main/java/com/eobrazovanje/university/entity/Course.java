@@ -1,5 +1,8 @@
 package com.eobrazovanje.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -12,12 +15,13 @@ public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id", unique = true, nullable = false)
-    private Long course_id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Teacher_engagement> teacher_engagements = new HashSet<>();
 
     @Column(name="deleted", columnDefinition="BOOLEAN DEFAULT FALSE")
@@ -26,12 +30,12 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public Long getCourse_id() {
-        return course_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setCourse_id(Long course_id) {
-        this.course_id = course_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
