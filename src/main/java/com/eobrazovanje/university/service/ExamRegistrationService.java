@@ -61,20 +61,26 @@ public class ExamRegistrationService implements ExamRegistrationInterface {
         int totalPoints = examRegistration.getColloquium_points() + examRegistration.getExam_points();
         if(totalPoints >= 90) {
             examRegistration.setGrade(10);
+            examRegistration.setStatus(Status.PASSED);
         }else if (totalPoints >= 80) {
             examRegistration.setGrade(9);
+            examRegistration.setStatus(Status.PASSED);
         }else if (totalPoints >= 70) {
             examRegistration.setGrade(8);
+            examRegistration.setStatus(Status.PASSED);
         }else if (totalPoints >= 60) {
             examRegistration.setGrade(7);
+            examRegistration.setStatus(Status.PASSED);
         }else if (totalPoints >= 50) {
             examRegistration.setGrade(6);
+            examRegistration.setStatus(Status.PASSED);
         }else if (totalPoints >= 0) {
             examRegistration.setGrade(5);
+            examRegistration.setStatus(Status.ACTIVE);
 
         }
 
-        examRegistration.setStatus(Status.PASSED);
+
 
         return examRegistrationRepository.save(examRegistration);
     }
